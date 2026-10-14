@@ -686,3 +686,22 @@ trocar pela original quando o design.ts da máquina dele vier.
 - **Card de capítulo SEM barra de progresso** (14/10/2026, ele circulou a barra
   e pediu "pode tirar"). Saiu dos nove cards e do dossiê; o contador 1/9 → 9/9
   segue sendo quem mostra quanto falta.
+
+### FLV — segunda leva (14/10/2026): o PDF chegou e tudo fechou
+- PDF do plano (76 págs.) enviado por ele; o link do Poder360 é bloqueado na nuvem.
+  **Todas as afirmações da fala conferem no PDF, com página** — inclusive as que a
+  imprensa não citava: ClarIA pede medida protetiva (19), 100% dos serviços
+  "passíveis de digitalização" (25 — a ressalva vai no GC), CPF/prontuário (26),
+  1º emprego e 50+ (44), "Estatal não é palanque nem cabide de apadrinhado" (70).
+  Págs. 15 e 58 confirmadas pelo número impresso no rodapé.
+- **Peças:** A-Boatos (posts ilegíveis, nada de nome/@/marca) · K-Documento (capa,
+  folhear com 76 no hodômetro, 9 capítulos, carimbo "REGISTRADO NO TSE" SEM data —
+  a data é de imprensa) · F-Marcadores (campo de símbolos: MARCADOR DE PÁGINA, novo
+  na série) · C-SemMedo · L-Pagina15 · D-Imposto (30% "projeção" × 19% OCDE) ·
+  G-Casas · H-Cresce · E-Trem (7 capitais por lat/lon real, traçado ESQUEMÁTICO
+  dito na tela) · M-Pagina58 · J-Ministerios · B-Capitulo-1..9 · L1/L2/L3.
+- Papel e hodômetro **reconstruídos** em `src/flv/Documento.tsx` e `src/flv/comum.tsx`
+  pelo que este arquivo descreve — trocar pelo `Papel3D`/`Odometro` dele quando vier.
+- `scripts/caixas_pdf.py`: caixas da frase pelo `pdftotext -bbox-layout` (sem PyMuPDF
+  na nuvem). Falha alto se a frase não está na página (testado: a capa é imagem).
+- Documento tem de LER no celular: close de leitura com escala ~0,8 a 200 dpi.

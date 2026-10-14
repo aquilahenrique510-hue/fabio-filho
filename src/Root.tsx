@@ -4,6 +4,30 @@ import {ALT, FPS, LARG, f} from './shared/design';
 import {Capitulo, type CapituloProps} from './flv/Capitulo';
 import {CAPITULOS} from './flv/config';
 import {PalavraPorPalavra, ESSA_NEM_EU, duracaoPalavras} from './flv/PalavraPorPalavra';
+import {Numeros, SEM_MEDO, CASAS, CRESCE, MINISTERIOS, type NumerosProps} from './flv/Numeros';
+import {Barras, IMPOSTO} from './flv/Barras';
+import {Trem, TREM} from './flv/Trem';
+import {Simbolos, MARCADORES} from './flv/Simbolos';
+import {Boatos, BOATOS} from './flv/Boatos';
+import {DocumentoCapa, Pagina15, Pagina58, K, L, M} from './flv/Documento';
+import type {Tema} from './shared/design';
+
+const durDe = (j: {inicio: number; fim: number}) => Math.round(f(j.fim - j.inicio));
+const NUMEROS = [
+  {id: 'FLV-C-SemMedo', j: SEM_MEDO},
+  {id: 'FLV-G-Casas', j: CASAS},
+  {id: 'FLV-H-Cresce', j: CRESCE},
+  {id: 'FLV-J-Ministerios', j: MINISTERIOS},
+];
+const PECAS: {id: string; c: React.FC<{tema: Tema}>; j: {inicio: number; fim: number}}[] = [
+  {id: 'FLV-A-Boatos', c: Boatos, j: BOATOS},
+  {id: 'FLV-F-Marcadores', c: Simbolos, j: MARCADORES},
+  {id: 'FLV-D-Imposto', c: Barras, j: IMPOSTO},
+  {id: 'FLV-E-Trem', c: Trem, j: TREM},
+  {id: 'FLV-K-Documento', c: DocumentoCapa, j: K},
+  {id: 'FLV-L-Pagina15', c: Pagina15, j: L},
+  {id: 'FLV-M-Pagina58', c: Pagina58, j: M},
+];
 
 // ── lettering (kit KIT - LETTERING NIKOLAS, 30/09/2026) ─────────────────────
 import {LetteringExemplo, EXEMPLO_DUR} from './lettering/Exemplo';
@@ -21,6 +45,32 @@ import {LetteringModelo6, DURACAO6_PADRAO as LETTER6_DUR, duracao6De, type Model
 
 export const Root: React.FC = () => (
   <>
+    {/* FLV — peças com tema (alfa / claro / escuro por --props) */}
+    {PECAS.map((p) => (
+      <Composition<any, {tema: Tema}>
+        key={p.id}
+        id={p.id}
+        component={p.c}
+        durationInFrames={durDe(p.j)}
+        fps={FPS}
+        width={LARG}
+        height={ALT}
+        defaultProps={{tema: 'alfa'}}
+      />
+    ))}
+    {NUMEROS.map((n) => (
+      <Composition<any, NumerosProps>
+        key={n.id}
+        id={n.id}
+        component={Numeros}
+        durationInFrames={durDe(n.j)}
+        fps={FPS}
+        width={LARG}
+        height={ALT}
+        defaultProps={{tema: 'alfa', itens: n.j.itens}}
+      />
+    ))}
+
     {/* FLV — "E essa nem eu esperava", palavra por palavra (01:51,480) */}
     <Composition
       id="FLV-L2-EssaNemEu"
