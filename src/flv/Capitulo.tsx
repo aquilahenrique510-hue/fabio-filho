@@ -2,8 +2,8 @@
 // A peça começa no onset do número falado ("Primeiro", "Dois"...) e dura até o
 // próximo número. Entra no centro, o nome do eixo sobe palavra por palavra no
 // tempo da fala, e o card encolhe para o canto como rótulo enquanto o capítulo
-// dura. A barra de nove segmentos fica embaixo o tempo todo, e o segmento atual
-// enche ao longo do capítulo — nada fica parado.
+// dura, sempre derivando — nada fica parado.
+// SEM barra de progresso: ele pediu para tirar em 14/10/2026 ("pode tirar").
 //
 // Tinta: tudo em chapa amarela com texto escuro, para ler igual sobre o fundo
 // branco do bruto, sobre a camisa preta e no master escuro.
@@ -122,56 +122,7 @@ export const Capitulo: React.FC<CapituloProps> = ({n, tema}) => {
 					</div>
 				</div>
 
-				<Barra n={n} frame={frame} dur={durationInFrames} />
 			</AbsoluteFill>
 		</AbsoluteFill>
-	);
-};
-
-// Nove segmentos na base do quadro. Os anteriores ficam acesos a 45%, o atual
-// enche ao longo do capítulo, os próximos ficam só no trilho.
-const Barra: React.FC<{n: number; frame: number; dur: number}> = ({n, frame, dur}) => {
-	const vao = 10;
-	const larg = (LARGURA - vao * (TOTAL - 1)) / TOTAL;
-	const e = sobe(frame, f(0.15), f(0.5));
-	const enche = trava(frame / (dur - FOLGA_FIM - SAIDA));
-	return (
-		<div
-			style={{
-				position: 'absolute',
-				left: MARGEM,
-				top: 1752,
-				display: 'flex',
-				gap: vao,
-				opacity: e,
-				transform: `translateY(${(1 - e) * 24}px)`,
-			}}
-		>
-			{Array.from({length: TOTAL}, (_, i) => {
-				const k = i + 1;
-				const cheio = k < n ? 1 : k === n ? enche : 0;
-				return (
-					<div
-						key={i}
-						style={{
-							width: larg,
-							height: 12,
-							borderRadius: 6,
-							backgroundColor: 'rgba(138,144,153,0.45)',
-							overflow: 'hidden',
-						}}
-					>
-						<div
-							style={{
-								width: `${cheio * 100}%`,
-								height: '100%',
-								backgroundColor: COR.marca,
-								opacity: k < n ? 0.5 : 1,
-							}}
-						/>
-					</div>
-				);
-			})}
-		</div>
 	);
 };

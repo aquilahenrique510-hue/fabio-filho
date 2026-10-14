@@ -683,3 +683,6 @@ trocar pela original quando o design.ts da máquina dele vier.
   (o Chromium normal não roda o headless antigo).
 - `--ignore-certificate-errors`: o proxy da sessão quebra o TLS das Google Fonts.
 - Alfa precisa de `--image-format=png` junto com `--pixel-format=yuva444p10le`.
+- **Card de capítulo SEM barra de progresso** (14/10/2026, ele circulou a barra
+  e pediu "pode tirar"). Saiu dos nove cards e do dossiê; o contador 1/9 → 9/9
+  segue sendo quem mostra quanto falta.
