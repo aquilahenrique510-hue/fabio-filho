@@ -1,0 +1,260 @@
+import React from 'react';
+import {Composition} from 'remotion';
+import {ALT, FPS, LARG, f} from './shared/design';
+import {Capitulo, type CapituloProps} from './flv/Capitulo';
+import {CAPITULOS} from './flv/config';
+import {PalavraPorPalavra, ESSA_NEM_EU, duracaoPalavras} from './flv/PalavraPorPalavra';
+
+// ── lettering (kit KIT - LETTERING NIKOLAS, 30/09/2026) ─────────────────────
+import {LetteringExemplo, EXEMPLO_DUR} from './lettering/Exemplo';
+import {LetteringModelo1, DURACAO_PADRAO as LETTER_DUR, type Modelo1Props} from './lettering/Modelo1';
+import {LetteringExemplo2, EXEMPLO2_DUR, type Exemplo2Props} from './lettering/Exemplo2';
+import {LetteringModelo2, DURACAO2_PADRAO as LETTER2_DUR, duracao2De, type Modelo2Props} from './lettering/Modelo2';
+import {LetteringExemplo3, EXEMPLO3_DUR, type Exemplo3Props} from './lettering/Exemplo3';
+import {LetteringModelo3, DURACAO3_PADRAO as LETTER3_DUR, duracao3De, type Modelo3Props} from './lettering/Modelo3';
+import {LetteringExemplo4, EXEMPLO4_DUR, type Exemplo4Props} from './lettering/Exemplo4';
+import {LetteringModelo4, DURACAO4_PADRAO as LETTER4_DUR, duracao4De, type Modelo4Props} from './lettering/Modelo4';
+import {LetteringExemplo5, EXEMPLO5_DUR, type Exemplo5Props} from './lettering/Exemplo5';
+import {LetteringModelo5, DURACAO5_PADRAO as LETTER5_DUR, duracao5De, type Modelo5Props} from './lettering/Modelo5';
+import {LetteringExemplo6, EXEMPLO6_DUR, type Exemplo6Props} from './lettering/Exemplo6';
+import {LetteringModelo6, DURACAO6_PADRAO as LETTER6_DUR, duracao6De, type Modelo6Props} from './lettering/Modelo6';
+
+export const Root: React.FC = () => (
+  <>
+    {/* FLV — "E essa nem eu esperava", palavra por palavra (01:51,480) */}
+    <Composition
+      id="FLV-L2-EssaNemEu"
+      component={PalavraPorPalavra}
+      durationInFrames={Math.round(f(duracaoPalavras(ESSA_NEM_EU)))}
+      fps={FPS}
+      width={LARG}
+      height={ALT}
+    />
+
+    {/* FLV — "O Flávio real", card de capítulo 1/9 → 9/9 */}
+    {CAPITULOS.map((c) => (
+      <Composition<any, CapituloProps>
+        key={c.n}
+        id={`FLV-B-Capitulo-${c.n}`}
+        component={Capitulo}
+        durationInFrames={Math.round(f(c.fim - c.inicio))}
+        fps={FPS}
+        width={LARG}
+        height={ALT}
+        defaultProps={{n: c.n, tema: 'alfa'}}
+      />
+    ))}
+
+      <Composition
+        id="LETTER-Exemplo"
+        component={LetteringExemplo}
+        durationInFrames={Math.round(EXEMPLO_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+      />
+
+      {/*
+        O LETTERING COMO FERRAMENTA (v5, 15/09/2026): fundo TRANSPARENTE, texto e
+        tempos por --props, duracao calculada a partir de props.duracao. Ver
+        src/lettering/Modelo1.tsx para o comando de render.
+      */}
+      <Composition
+        id="LETTER-Modelo1"
+        component={LetteringModelo1}
+        durationInFrames={Math.round(LETTER_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={{linha1: 'parar de criar', linha2: 'IMPOSTO', linha3: 'em cima de imposto'} as Modelo1Props}
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round((props.duracao ?? LETTER_DUR) * 60),
+        })}
+      />
+      <Composition
+        id="LETTER-Exemplo2"
+        component={LetteringExemplo2}
+        durationInFrames={Math.round(EXEMPLO2_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={{pequena: 'parar de criar', destaque: 'IMPOSTO'} as Exemplo2Props}
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(duracao2De(props.pequena, props.destaque) * 60),
+        })}
+      />
+      <Composition
+        id="LETTER-Modelo2"
+        component={LetteringModelo2}
+        durationInFrames={Math.round(LETTER2_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={{pequena: 'parar de criar', destaque: 'IMPOSTO'} as Modelo2Props}
+        calculateMetadata={({props}) => ({
+          // a duração sai do TEXTO: frase maior, peça maior
+          durationInFrames: Math.round(
+            (props.duracao ?? duracao2De(props.pequena, props.destaque) ?? LETTER2_DUR) * 60
+          ),
+        })}
+      />
+      <Composition
+        id="LETTER-Exemplo3"
+        component={LetteringExemplo3}
+        durationInFrames={Math.round(EXEMPLO3_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={
+          {antes: 'parar de criar', destaque: 'IMPOSTO', depois: 'em cima de imposto'} as Exemplo3Props
+        }
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(duracao3De(props.antes, props.destaque, props.depois) * 60),
+        })}
+      />
+      <Composition
+        id="LETTER-Modelo3"
+        component={LetteringModelo3}
+        durationInFrames={Math.round(LETTER3_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={
+          {antes: 'parar de criar', destaque: 'IMPOSTO', depois: 'em cima de imposto'} as Modelo3Props
+        }
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(
+            (props.duracao ?? duracao3De(props.antes, props.destaque, props.depois) ?? LETTER3_DUR) * 60
+          ),
+        })}
+      />
+      <Composition
+        id="LETTER-Exemplo4"
+        component={LetteringExemplo4}
+        durationInFrames={Math.round(EXEMPLO4_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={
+          {
+            pequena1: 'parar de criar',
+            destaque1: 'IMPOSTO',
+            pequena2: 'em cima de',
+            destaque2: 'IMPOSTO',
+          } as Exemplo4Props
+        }
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(
+            duracao4De(props.pequena1, props.destaque1, props.pequena2, props.destaque2) * 60
+          ),
+        })}
+      />
+      <Composition
+        id="LETTER-Modelo4"
+        component={LetteringModelo4}
+        durationInFrames={Math.round(LETTER4_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={
+          {
+            pequena1: 'parar de criar',
+            destaque1: 'IMPOSTO',
+            pequena2: 'em cima de',
+            destaque2: 'IMPOSTO',
+          } as Modelo4Props
+        }
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(
+            (props.duracao ??
+              duracao4De(props.pequena1, props.destaque1, props.pequena2, props.destaque2) ??
+              LETTER4_DUR) * 60
+          ),
+        })}
+      />
+
+      {/*
+        MODELO 5 (21/09/2026) - referencia dele em print E VIDEO. Uma palavra
+        grande LARANJA (#FF6700, medido no print) entre duas linhas pequenas em
+        italico que a invadem. As fontes sao as NOSSAS, por pedido literal dele:
+        Coolvetica nas pequenas, Montserrat Black na grande.
+
+        O movimento saiu do video quadro a quadro: a linha de cima DIGITA em
+        ordem, a palavra grande acende EMBARALHADA e piscando (extraido: "XT" ->
+        "T_T" -> "TE_T" -> "T_XT" -> "TEX" -> "TEXT"), e a linha de baixo chega
+        esmaecida e vai ficando branca. Um pop de tecla por letra.
+      */}
+      <Composition
+        id="LETTER-Exemplo5"
+        component={LetteringExemplo5}
+        durationInFrames={Math.round(EXEMPLO5_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={
+          {cima: 'Comente', destaque: 'TEXT', baixo: 'para receber'} as Exemplo5Props
+        }
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(
+            duracao5De(props.cima, props.destaque, props.baixo) * 60
+          ),
+        })}
+      />
+      <Composition
+        id="LETTER-Modelo5"
+        component={LetteringModelo5}
+        durationInFrames={Math.round(LETTER5_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={
+          {cima: 'Comente', destaque: 'TEXT', baixo: 'para receber'} as Modelo5Props
+        }
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(
+            (props.duracao ?? duracao5De(props.cima, props.destaque, props.baixo) ?? LETTER5_DUR) *
+              60
+          ),
+        })}
+      />
+
+      {/*
+        MODELO 6 (22/09/2026) - print e video. Mesmo esqueleto do 5 (pequena ·
+        GRANDE · pequena), e separado dele no que importa: a palavra grande e
+        CROMADA (degrade vertical dentro das letras, medido no print: tons de 56
+        a 254 nos mesmos glifos) com um BRILHO que varre da esquerda para a
+        direita; nada digita e nada pisca - as tres linhas chegam DESFOCADAS e
+        desembacam; a pequena de cima alinha a esquerda e a de baixo a direita.
+      */}
+      <Composition
+        id="LETTER-Exemplo6"
+        component={LetteringExemplo6}
+        durationInFrames={Math.round(EXEMPLO6_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={
+          {cima: 'Crie letterings', destaque: 'ATRATIVOS', baixo: 'sem esforço'} as Exemplo6Props
+        }
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(duracao6De(props.cima, props.destaque, props.baixo) * 60),
+        })}
+      />
+      <Composition
+        id="LETTER-Modelo6"
+        component={LetteringModelo6}
+        durationInFrames={Math.round(LETTER6_DUR * 60)}
+        fps={60}
+        width={1080}
+        height={1920}
+        defaultProps={
+          {cima: 'Crie letterings', destaque: 'ATRATIVOS', baixo: 'sem esforço'} as Modelo6Props
+        }
+        calculateMetadata={({props}) => ({
+          durationInFrames: Math.round(
+            (props.duracao ?? duracao6De(props.cima, props.destaque, props.baixo) ?? LETTER6_DUR) * 60
+          ),
+        })}
+      />
+  </>
+);
