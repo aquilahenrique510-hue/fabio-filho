@@ -36,7 +36,8 @@ export const Cena: React.FC<{tema: Tema; children: React.ReactNode; derivaPx?: n
 		<AbsoluteFill style={{backgroundColor: fundo ?? 'transparent'}}>
 			<AbsoluteFill
 				style={{
-					opacity: op,
+					// 6 quadros de entrada: nenhuma peça nasce acesa no quadro 0
+					opacity: op * limita(frame / 6),
 					fontFamily: ARCHIVO,
 					transform: `translateY(${deriva(frame, durationInFrames, derivaPx).toFixed(2)}px)`,
 				}}

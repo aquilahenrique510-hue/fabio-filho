@@ -100,7 +100,8 @@ export const Papel: React.FC<{
 
 	return (
 		<AbsoluteFill style={{backgroundColor: fundo ?? 'transparent'}}>
-			<AbsoluteFill style={{opacity: 1 - w * 0.9, fontFamily: ARCHIVO}}>
+			{/* nasce do zero (nada aparece do nada) e a saída zera de verdade */}
+			<AbsoluteFill style={{opacity: limita(frame / f(0.3)) * (1 - w), fontFamily: ARCHIVO}}>
 				{/* o desfoque mora FORA da perspectiva (filter achata o 3D) */}
 				<AbsoluteFill style={{filter: `blur(${((1 - e) * 14 + w * 18).toFixed(2)}px)`}}>
 					<AbsoluteFill
