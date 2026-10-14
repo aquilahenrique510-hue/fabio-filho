@@ -57,6 +57,12 @@ export const Capitulo: React.FC<CapituloProps> = ({n, tema}) => {
 
 	const fundo = placa(tema);
 
+	// nome numa linha só quando tem até 3 palavras: o corpo encolhe pelo número
+	// de letras (80 px cabe até 15 — "BRASIL QUE PROSPERA", com 17, estourava a
+	// borda direita na revisão montada). Com mais palavras, quebra em linhas.
+	const letras = cap.nome.reduce((s, p) => s + p.w.length, 0);
+	const corpoNome = cap.nome.length <= 3 ? Math.min(80, (80 * 15) / letras) : 80;
+
 	return (
 		<AbsoluteFill style={{backgroundColor: fundo ?? 'transparent'}}>
 			<AbsoluteFill style={{opacity: opSaida, fontFamily}}>
@@ -104,7 +110,7 @@ export const Capitulo: React.FC<CapituloProps> = ({n, tema}) => {
 									style={{
 										backgroundColor: COR.marca,
 										color: COR.texto,
-										fontSize: 80,
+										fontSize: corpoNome,
 										fontWeight: 800,
 										lineHeight: 1,
 										textTransform: 'uppercase',
