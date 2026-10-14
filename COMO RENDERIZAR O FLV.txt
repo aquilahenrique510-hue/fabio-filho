@@ -1,0 +1,36 @@
+FLV — "O Flávio real" (NIKOLAS_FUNDO_BRANCO_H264_6K_AUDIO_por.srt)
+Como tirar os masters alfa na sua máquina (os arquivos passam de 30 MB e não vão pelo chat)
+
+1. Baixar o código:   git pull   (branch claude/nice-sagan-l5a4w3)
+2. Instalar:          npm ci
+3. Renderizar tudo:   scripts\render_flv.bat      → C:\render\FLV
+4. Conferir:          python scripts\confere_alfa.py C:\render\FLV
+5. Copiar para o E:   pasta "Nikolas - NIKOLAS_FUNDO_BRANCO - O Flavio real"
+
+TIMELINE (início de cada peça no SRT, alfa por cima do bruto)
+  00:00,080  FLV-A-Boatos            posts de boato caindo (ilegíveis)
+  00:08,840  FLV-L1-Real             lettering modelo 2 "contar o Flávio / REAL"
+  00:10,940  FLV-F-Marcadores        campo de símbolos (EMBAIXO do documento)
+  00:10,940  FLV-K-Documento         capa, folhear 1→76, 9 capítulos, carimbo TSE
+  00:26,060  FLV-B-Capitulo-1        card 1/9 Brasil sem Medo
+  00:29,900  FLV-C-SemMedo           5 · 500 MIL · 1 MILHÃO
+  00:36,940  FLV-L-Pagina15          pág. 15 com marca-texto + "15" impresso
+  00:43,900  FLV-B-Capitulo-2
+  00:55,800  FLV-B-Capitulo-3
+  01:05,140  FLV-B-Capitulo-4
+  01:07,080  FLV-D-Imposto           30% (projeção) × 19% OCDE
+  01:16,980  FLV-B-Capitulo-5
+  01:26,620  FLV-B-Capitulo-6
+  01:28,000  FLV-G-Casas             2,5 MILHÕES de casas
+  01:38,540  FLV-B-Capitulo-7
+  01:40,300  FLV-H-Cresce            R$ 900 BILHÕES · 4%
+  01:46,880  FLV-E-Trem              7 capitais, 1.400 km (esquemático)
+  01:51,480  FLV-L2-EssaNemEu        palavra por palavra
+  01:53,460  FLV-M-Pagina58          pág. 58 com marca-texto + "58" impresso
+  01:58,720  FLV-B-Capitulo-8
+  02:10,600  FLV-B-Capitulo-9
+  02:12,600  FLV-J-Ministerios       10 ministérios a menos
+  02:23,580  FLV-L3-Consegue         lettering modelo 1 "mas pelo que / CONSEGUE / sustentar"
+
+Os cards de capítulo vão na trilha de CIMA de tudo (o rótulo fica no canto).
+LEGENDA: corrigir "Clarear" → "ClarIA" (cue 111, 00:52,72).
