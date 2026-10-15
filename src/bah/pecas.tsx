@@ -1,5 +1,6 @@
 // NK na Bahia (srt/NK_na_Bahia.srt, 01:49) — as peças, em ordem de fala.
 // Tempos = onsets de cue do SRT, em segundos. Apuração em srt/NK_na_Bahia_APURACAO.md.
+// SEM LEGENDA (pedido dele): texto só como rótulo de gráfico; a fala vai na legenda dele.
 // Decisões dele (15/10/2026): "5 das 10" no lugar de "seis"; só soja e algodão;
 // pobreza como "IBGE 2021" (é extrema pobreza); "+20 mil empresas" SEM fonte.
 import React from 'react';
@@ -76,9 +77,6 @@ export const Abertura: React.FC<{tema: Tema}> = ({tema}) => {
 				<text x={540} y={1030} textAnchor="middle" fontSize={130} fontWeight={800} fill={BRANCO(tema)} opacity={duas}
 					style={{filter: tema === 'claro' ? 'none' : 'drop-shadow(0 4px 12px rgba(0,0,0,.5))'}} fontFamily="inherit">×</text>
 			</svg>
-			<Texto tema={tema} t={r(0.48)} top={420} size={64}>
-				<span style={{color: amarelo}}>BAHIA</span>
-			</Texto>
 		</Cena>
 	);
 };
@@ -169,7 +167,6 @@ export const LemNumeros: React.FC<{tema: Tema}> = ({tema}) => {
 				<g transform={`translate(400 ${1300 + (1 - eAgro) * 80}) rotate(${balanca}) scale(${0.8 * eAgro})`} opacity={eAgro}><Soja /></g>
 				<g transform={`translate(680 ${1300 + (1 - eAgro) * 80}) rotate(${-balanca}) scale(${0.8 * eAgro})`} opacity={eAgro}><Algodao /></g>
 			</svg>
-			<Texto tema={tema} t={r(24.9)} top={1430} size={44}>potência do <span style={{color: COR.marca}}>agro</span></Texto>
 			<Fonte tema={tema} t={r(20.0)}>Lei estadual 7.619/2000 · IBGE, Censo 2022</Fonte>
 		</Cena>
 	);
@@ -202,7 +199,7 @@ export const Agro: React.FC<{tema: Tema}> = ({tema}) => {
 			</svg>
 			<Texto tema={tema} t={r(26.6)} top={1210} size={58}><span style={{position: 'relative', left: -210}}>SOJA</span></Texto>
 			<Texto tema={tema} t={r(27.34)} top={1210} size={58}><span style={{position: 'relative', left: 210}}>ALGODÃO</span></Texto>
-			<Texto tema={tema} t={r(28.72)} top={600} size={50}>lideram as <span style={{color: COR.marca}}>exportações</span><br /><span style={{color: COR.marca}}>agrícolas</span> da Bahia</Texto>
+			<Eixo tema={tema} t={r(28.72)} top={680}>Exportações agrícolas · BA</Eixo>
 			<Fonte tema={tema} t={r(28.0)}>Agrostat/MAPA, via Seagri-BA · 2024</Fonte>
 		</Cena>
 	);
@@ -377,7 +374,7 @@ export const Faccoes: React.FC<{tema: Tema}> = ({tema}) => {
 			<Sons cues={cues(FACCOES, [{t: 51.44, som: 'chain', vol: 0.7}])} />
 			<Numero tema={tema} t={r(51.44)} top={720} valor="17" px={230} cor={par(ALERTA, tema)} />
 			<Texto tema={tema} t={r(51.6)} top={980} size={56}>facções criminosas</Texto>
-			<Texto tema={tema} t={r(51.9)} top={1060} size={40} cor={COR.marca}>o estado com mais facções</Texto>
+			<Texto tema={tema} t={r(51.9)} top={1060} size={40} cor={COR.marca}>1º do Brasil</Texto>
 			<Fonte tema={tema} t={r(51.0)} top={1180}>Levantamento O Globo, ago/2025</Fonte>
 		</Cena>
 	);
@@ -410,7 +407,6 @@ export const PortaAberta: React.FC<{tema: Tema}> = ({tema}) => {
 					<Porta abre={abre} destranca={destranca} />
 				</g>
 			</svg>
-			<Texto tema={tema} t={r(55.52)} top={1360} size={54}>porta aberta, <span style={{color: COR.marca}}>destrancada</span></Texto>
 			<Fonte tema={tema} t={r(54.2)} top={1450}>Reportagem: Correio, ago/2025</Fonte>
 		</Cena>
 	);
@@ -535,10 +531,9 @@ export const Educacao: React.FC<{tema: Tema}> = ({tema}) => {
 					<path d={`M-130 -100 L${-130 + 260 * risco} ${-100 + 200 * risco}`} stroke={par(ALERTA, tema)} strokeWidth={18} strokeLinecap="round" />
 				</g>
 			</svg>
-			<Texto tema={tema} t={r(71.86)} top={1000} size={44}>não sabem ler nem escrever</Texto>
 			<Numero tema={tema} t={r(73.3)} top={1110} valor="1.420.947" px={130} dur={2.2} cor={COR.marca} />
-			<Texto tema={tema} t={r(75.4)} top={1260} size={46}>baianos</Texto>
-			<Texto tema={tema} t={r(76.92)} top={1340} size={50}>o <span style={{color: COR.marca}}>maior número</span> do Brasil</Texto>
+			<Texto tema={tema} t={r(73.8)} top={1260} size={40} peso={600}>baianos que não sabem ler nem escrever</Texto>
+			<Texto tema={tema} t={r(76.92)} top={1330} size={44} cor={COR.marca}>1º do Brasil</Texto>
 			<Fonte tema={tema} t={r(73.8)} top={1450}>IBGE, Censo 2022 · 15 anos ou mais</Fonte>
 		</Cena>
 	);
