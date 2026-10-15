@@ -26,3 +26,10 @@ FLV-N-MenosImposto-alpha.mov  ->  01:12,700 (96 quadros, até 01:14,300)
   em "combustível" entra a bomba com o mostrador descendo. Seta verde para baixo em cada.
   Sem número (o plano, pág. 30, não diz quanto baixa). SFX: whoosh + dois pops.
   Substitui o FLV-N da V2 nesse trecho.
+
+FLV-T-Tesoura-alpha.mov  ->  00:01,900 (228 quadros, até 00:05,700), NA FAIXA DE CIMA da FLV-A3
+  A referência que você mandou (terno, faixa presidencial, tesoura gigante) reconstruída
+  em ilustração, no canto inferior direito. A tesoura fecha nos três cortes da fala:
+  "isso" 02,660 · "aquilo" 03,100 · "outro" 03,640. Sai antes do Gatorade.
+  SEM SOM de propósito: a FLV-A3 já toca o obturador nesses mesmos três cortes.
+  Quer em outro canto ou maior? É só mover/escalar no Premiere (alfa cheio 1080x1920).
