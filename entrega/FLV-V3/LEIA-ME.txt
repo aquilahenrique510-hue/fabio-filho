@@ -28,7 +28,7 @@ FLV-N-MenosImposto-alpha.mov  ->  01:12,700 (96 quadros, até 01:14,300)
   Substitui o FLV-N da V2 nesse trecho.
 
 FLV-T-Tesoura-alpha.mov  ->  00:01,900 (228 quadros, até 00:05,700), NA FAIXA DE CIMA da FLV-A3
-  VEM EM 2 PARTES (.part01/.part02, o arquivo passa de 100 MB): dê dois cliques em
+  VEM EM 3 PARTES (.part01 a .part03, o arquivo passa de 100 MB): dê dois cliques em
   JUNTAR-Tesoura.bat que ele monta o FLV-T-Tesoura-alpha.mov na mesma pasta.
   É A SUA ARTE, animada (não é redesenho): separada em duas camadas, o boneco
   (recortado do fundo) e a tribuna. A tribuna sobe, ele sai de trás dela com o
@@ -50,3 +50,12 @@ FLV-T3-Tesoura-video-alpha.mov  ->  O SEGUNDO VÍDEO QUE VOCÊ MANDOU (fundo ver
   96 quadros, 4 s, 24 fps, 1080x1920, sem áudio. Mesmo tratamento da T2 (recorte quadro a
   quadro, tribuna pela cor sem pegar o verde, borda recolhida sem halo verde).
   Material: corte e fade no Premiere. T2 e T3 são alternativas entre si — use a que gostar.
+
+CORREÇÃO 15/10 (FLV-T, T2, T3 refeitos) — "tá bugando, olha as bordas":
+  1) eu tinha recomprimido com ALFA DE 8 BITS e o Premiere lê esse alfa errado (o fundo
+     aparecia LISTRADO). Agora é alfa de 16 bits, o padrão do ProRes 4444.
+  2) os pixels transparentes guardavam a cor do fundo (verde) por baixo; agora levam a cor
+     do boneco mais próximo — nada de fundo fica escondido no arquivo.
+  3) T3: sobrava verde do fundo preso entre braço, corpo e tribuna (bolsões fechados).
+     Removido; o verde que fica é só o da faixa/gravata/broche (encosta no amarelo).
+  Conferido quadro a quadro (96 + 96 + 228), alfa decodificado = original (dif. média 1/255).

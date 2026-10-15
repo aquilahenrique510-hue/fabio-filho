@@ -45,8 +45,12 @@ for n in nomes:
     # os engolia. Se o fundo é chapado, o que o modelo marcou como fundo E tem a cor do
     # fundo sai — a faixa verde fica porque o modelo a marca como corpo.
     cantos = np.concatenate([rgb[:30, :30].reshape(-1, 3), rgb[:30, -30:].reshape(-1, 3)])
-    if cantos.std(0).max() < 12:
-        perto_fundo = np.abs(rgb - np.median(cantos, 0)).sum(2) < 60
+    cor_fundo = np.median(cantos, 0)
+    sat_fundo = (cor_fundo.max() - cor_fundo.min()) / max(cor_fundo.max(), 1)
+    # só para fundo CHAPADO E COLORIDO (chroma). Fundo branco/cinza não: camisa, punho
+    # e tesoura têm essa cor e seriam furados (aconteceu na T2).
+    if cantos.std(0).max() < 12 and sat_fundo > 0.35:
+        perto_fundo = np.abs(rgb - cor_fundo).sum(2) < 60
         # verde legítimo (faixa, gravata, broche) encosta no AMARELO; bolsão de fundo não.
         # 1) o fundo "de fora" (ligado à borda do quadro) é separado primeiro, sem
         #    atravessar a faixa — onde o modelo diz corpo (a >= 0.5) ele não passa;
