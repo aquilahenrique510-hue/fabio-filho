@@ -6,6 +6,12 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {COR, EXPO_OUT, f, limita, type Tema} from '../shared/design';
 import {Cena, Odometro, sobe, sombra, tinta, tintaMeta} from './comum';
+import {Sons, type Cue} from './som';
+import {DesCamera, DesCasas, DesCresce, DesMinisterios, DesObras, DesPresidio} from './ilustra/cap6a9';
+import {ESCALA_ILUSTRA} from './ilustra/base';
+
+/** V2: desenho da proposta que entra junto do número, na faixa de baixo. */
+export type DesenhoNumero = React.FC<{e: number; cor: string; tema: Tema}>;
 
 export type ItemNumero = {
 	t: number; // s, relativo ao início da peça
@@ -13,6 +19,7 @@ export type ItemNumero = {
 	antes?: string; // "R$"
 	depois?: string; // "MIL", "MILHÕES", "%"
 	rotulo: string; // literal da fala
+	desenho?: DesenhoNumero; // V2
 };
 
 export type NumerosProps = {tema: Tema; itens: ItemNumero[]};
@@ -21,8 +28,16 @@ const FONTE = 'Plano de governo · TSE';
 const CENTRO_Y = 1180;
 const PX = 230;
 
+/** Som: o hodômetro rola (chain, cortado no tempo da rolagem) e o rótulo dá um tique. */
+const cuesDe = (itens: ItemNumero[]): Cue[] =>
+	itens.flatMap((it, i) => [
+		{t: it.t, som: 'chain' as const, vol: 0.8},
+		{t: it.t + 0.18, som: (i % 2 ? 'pop_2' : 'pop_1') as 'pop_1' | 'pop_2', vol: 0.6},
+	]);
+
 export const Numeros: React.FC<NumerosProps> = ({tema, itens}) => (
 	<Cena tema={tema}>
+		<Sons cues={cuesDe(itens)} />
 		{itens.map((it, i) => (
 			<Item key={i} tema={tema} item={it} proximo={itens[i + 1]?.t} />
 		))}
@@ -40,8 +55,18 @@ const Item: React.FC<{tema: Tema; item: ItemNumero; proximo?: number}> = ({tema,
 	const cor = tinta(tema);
 	const eR = sobe(frame, ini + f(0.18), f(0.5));
 	const temSuf = Boolean(item.depois);
+	const eD = sobe(frame, ini + f(0.1), f(0.9));
+	const Des = item.desenho;
 	const px = item.valor.length + (item.antes?.length ?? 0) > 5 ? PX * 0.82 : PX;
 	return (
+		<>
+		{Des && (
+			<svg width={1080} height={1920} style={{position: 'absolute', inset: 0, opacity: e * (1 - s), overflow: 'visible'}}>
+				<g transform={`translate(540 1560) scale(${(0.62 * ESCALA_ILUSTRA).toFixed(3)})`}>
+					<Des e={eD} cor={cor} tema={tema} />
+				</g>
+			</svg>
+		)}
 		<div
 			style={{
 				position: 'absolute',
@@ -93,6 +118,7 @@ const Item: React.FC<{tema: Tema; item: ItemNumero; proximo?: number}> = ({tema,
 				{item.rotulo}
 			</div>
 		</div>
+		</>
 	);
 };
 
@@ -105,7 +131,7 @@ const Fonte: React.FC<{tema: Tema; inicio: number}> = ({tema, inicio}) => {
 				position: 'absolute',
 				left: 0,
 				right: 0,
-				top: CENTRO_Y + 300,
+				top: 1720,
 				textAlign: 'center',
 				fontSize: 30,
 				fontWeight: 500,
@@ -128,9 +154,9 @@ export const SEM_MEDO = {
 	inicio: 29.9,
 	fim: 36.94,
 	itens: [
-		{t: 0, valor: '5', rotulo: 'presídios de segurança máxima'},
-		{t: 32.42 - 29.9, valor: '500', depois: 'MIL', rotulo: 'vagas novas'},
-		{t: 34.16 - 29.9, valor: '1', depois: 'MILHÃO', rotulo: 'de câmeras com reconhecimento facial'},
+		{t: 0, valor: '5', rotulo: 'presídios de segurança máxima', desenho: DesPresidio},
+		{t: 32.42 - 29.9, valor: '500', depois: 'MIL', rotulo: 'vagas novas', desenho: DesPresidio},
+		{t: 34.16 - 29.9, valor: '1', depois: 'MILHÃO', rotulo: 'de câmeras com reconhecimento facial', desenho: DesCamera},
 	] as ItemNumero[],
 };
 
@@ -138,7 +164,7 @@ export const SEM_MEDO = {
 export const CASAS = {
 	inicio: 88.0,
 	fim: 90.4,
-	itens: [{t: 0, valor: '2,5', depois: 'MILHÕES', rotulo: 'de casas'}] as ItemNumero[],
+	itens: [{t: 0, valor: '2,5', depois: 'MILHÕES', rotulo: 'de casas', desenho: DesCasas}] as ItemNumero[],
 };
 
 /** FLV-H-Cresce · cap. 7 · 01:40,300 → 01:46,880 */
@@ -146,8 +172,8 @@ export const CRESCE = {
 	inicio: 100.3,
 	fim: 106.88,
 	itens: [
-		{t: 0, valor: '900', antes: 'R$', depois: 'BILHÕES', rotulo: 'em estradas, portos e ferrovias em quatro anos'},
-		{t: 105.0 - 100.3, valor: '4', depois: '%', rotulo: 'meta de crescer ao ano'},
+		{t: 0, valor: '900', antes: 'R$', depois: 'BILHÕES', rotulo: 'em estradas, portos e ferrovias em quatro anos', desenho: DesObras},
+		{t: 105.0 - 100.3, valor: '4', depois: '%', rotulo: 'meta de crescer ao ano', desenho: DesCresce},
 	] as ItemNumero[],
 };
 
@@ -155,5 +181,5 @@ export const CRESCE = {
 export const MINISTERIOS = {
 	inicio: 132.6,
 	fim: 135.14,
-	itens: [{t: 0, valor: '10', rotulo: 'ministérios a menos, no mínimo'}] as ItemNumero[],
+	itens: [{t: 0, valor: '10', rotulo: 'ministérios a menos, no mínimo', desenho: DesMinisterios}] as ItemNumero[],
 };

@@ -13,6 +13,7 @@ import React from 'react';
 import {AbsoluteFill, Img, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COR, EXPO_OUT, INOUT, deriva, f, limita, placa, type Tema} from '../shared/design';
 import {ARCHIVO, FOLGA_FIM, Odometro, SAIDA, sobe, sombra, tinta, tintaMeta} from './comum';
+import {Sons, type Cue} from './som';
 
 const PW = 1654; // página A4 a 200 dpi
 const PH = 2339;
@@ -77,8 +78,9 @@ export const Papel: React.FC<{
 	marcas?: Marca[];
 	folhas?: {src: string; t: number}[];
 	folhasSaem?: number;
+	cues?: Cue[]; // sons próprios da peça (s, relativos)
 	children?: React.ReactNode; // HUD por cima, em coordenadas de tela
-}> = ({tema, src, chaves, marcas = [], folhas = [], folhasSaem, children}) => {
+}> = ({tema, src, chaves, marcas = [], folhas = [], folhasSaem, cues = [], children}) => {
 	const frame = useCurrentFrame();
 	const {durationInFrames: dur} = useVideoConfig();
 	const s = frame / 60;
@@ -100,6 +102,21 @@ export const Papel: React.FC<{
 
 	return (
 		<AbsoluteFill style={{backgroundColor: fundo ?? 'transparent'}}>
+			<Sons
+				cues={[
+					// o papel entra (0,9 s) e sai em whip
+					{t: 0, som: 'whoosh_02', vol: 0.7, dura: 0.9},
+					{t: (dur - FOLGA_FIM - SAIDA) / 60, som: 'woosh_rapido', vol: 0.6},
+					// marca-texto: o traço longo pede som LONGO, do tamanho do traço (§4.1);
+					// marca curta (o número da página) leva tique
+					...marcas.map((m): Cue =>
+						m.t1 - m.t0 < 0.6
+							? {t: m.t0, som: 'pop_1', vol: 0.7}
+							: {t: m.t0, som: 'woosh_longo', vol: 0.75, dura: m.t1 - m.t0},
+					),
+					...cues,
+				]}
+			/>
 			{/* nasce do zero (nada aparece do nada) e a saída zera de verdade */}
 			<AbsoluteFill style={{opacity: limita(frame / f(0.3)) * (1 - w), fontFamily: ARCHIVO}}>
 				{/* o desfoque mora FORA da perspectiva (filter achata o 3D) */}
@@ -297,6 +314,14 @@ export const DocumentoCapa: React.FC<{tema: Tema}> = ({tema}) => {
 			]}
 			folhas={FOLHAS.map((n, i) => ({src: `flv/folha_p${String(n).padStart(2, '0')}.jpg`, t: r(11.82) + (i * (13.66 - 11.82)) / FOLHAS.length}))}
 			folhasSaem={r(14.82)}
+			cues={[
+				{t: r(11.82), som: 'whoosh_02', vol: 0.7, dura: 1.84}, // folhear: um gesto, um som
+				{t: r(11.82), som: 'chain', vol: 0.7}, // 76 rolando
+				{t: r(13.66), som: 'chain', vol: 0.7}, // 9 rolando
+				{t: r(14.82), som: 'whoosh_rapido', vol: 0.6}, // folhas saem
+				{t: r(18.88), som: 'whoosh_02', vol: 0.6, dura: 1.5}, // câmera no título
+				{t: r(22.14), som: 'carimbo', vol: 0.95},
+			]}
 		>
 			<Contador tema={tema} inicio={f(r(11.82))} valor="76" unidade="páginas" top={150} dur={f(1.84)} sai={f(r(18.3))} />
 			<Contador tema={tema} inicio={f(r(13.66))} valor="9" unidade="capítulos" top={290} dur={f(0.9)} sai={f(r(18.3)) + 4} />
@@ -352,14 +377,14 @@ export const Pagina15: React.FC<{tema: Tema}> = ({tema}) => {
 };
 
 /**
- * FLV-M-Pagina58 · 01:53,460 → 01:58,720
+ * FLV-M-Pagina58 · 01:56,520 → 01:58,720  (V2: entra depois das chamas, FLV-O)
  * "O plano tem meta de zerar o desmatamento ilegal até 2029. Está na página 58."
  *   página entra .............. 01:53,460 ("O plano")
  *   marca-texto corre ......... 01:54,320 ("de zerar o") → 01:57,500 (fim de "2029.")
  *   câmera no "58" impresso ... 01:57,840 ("página 58.")
  * Trecho marcado, literal da pág. 58: "zerar o desmatamento ilegal até 2029".
  */
-export const M = {inicio: 113.46, fim: 118.72};
+export const M = {inicio: 116.52, fim: 118.72};
 const BLOCO_58 = [
 	[958.3, 729.7, 1455.1, 769.2],
 	[198.9, 779.0, 353.2, 818.5],
@@ -373,14 +398,14 @@ export const Pagina58: React.FC<{tema: Tema}> = ({tema}) => {
 			tema={tema}
 			src="flv/plano_p58.png"
 			chaves={[
-				{t: 0, ...CENTRO, esc: 0.52},
-				{t: r(114.32), fx: 827, fy: 775, esc: 0.8},
+				{t: 0, fx: 827, fy: 775, esc: 0.7},
+				{t: 0.45, fx: 827, fy: 775, esc: 0.8},
 				{t: r(117.5), fx: 820, fy: 780, esc: 0.84},
 				{t: r(117.84) + 0.35, fx: 360, fy: 2020, esc: 1.1},
 				{t: r(118.72), fx: 340, fy: 2040, esc: 1.16},
 			]}
 			marcas={[
-				{caixas: BLOCO_58, t0: r(114.32), t1: r(117.5)},
+				{caixas: BLOCO_58, t0: 0.4, t1: r(117.45)},
 				{caixas: NUM_58, t0: r(117.84) + 0.2, t1: r(117.84) + 0.5},
 			]}
 		>

@@ -13,6 +13,7 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {COR, EXPO_OUT, f, limita, type Tema} from '../shared/design';
 import {Cena} from './comum';
+import {Sons} from './som';
 
 export const BOATOS = {inicio: 0.08, fim: 7.82};
 
@@ -29,6 +30,7 @@ const POSES = [
 
 export const Boatos: React.FC<{tema: Tema}> = ({tema}) => (
 	<Cena tema={tema} derivaPx={-20}>
+		<Sons cues={ONSETS.map((t, i) => ({t, som: i === 0 ? ('whoosh_rapido' as const) : i % 2 ? ('pop_1' as const) : ('pop_2' as const), vol: i === 0 ? 0.75 : 0.65}))} />
 		{ONSETS.map((t, i) => (
 			<Post key={i} tema={tema} t={t} pose={POSES[i]} i={i} />
 		))}

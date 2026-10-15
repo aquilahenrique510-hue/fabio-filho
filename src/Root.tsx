@@ -12,6 +12,7 @@ import {Boatos, BOATOS} from './flv/Boatos';
 import {DocumentoCapa, Pagina15, Pagina58, K, L, M} from './flv/Documento';
 import {Clarea, CLAREA, MenosImposto, MENOS_IMPOSTO, Chamas, CHAMAS} from './flv/Ilustra';
 import type {Tema} from './shared/design';
+import {V2, V2_DURACAO} from './flv/V2';
 
 const durDe = (j: {inicio: number; fim: number}) => Math.round(f(j.fim - j.inicio));
 const NUMEROS = [
@@ -49,6 +50,17 @@ import {LetteringModelo6, DURACAO6_PADRAO as LETTER6_DUR, duracao6De, type Model
 
 export const Root: React.FC = () => (
   <>
+    {/* FLV · V2 ILUSTRADA — o vídeo inteiro, com SFX */}
+    <Composition<any, {tema: Tema}>
+      id="FLV-V2-Completo"
+      component={V2}
+      durationInFrames={Math.round(f(V2_DURACAO))}
+      fps={FPS}
+      width={LARG}
+      height={ALT}
+      defaultProps={{tema: 'alfa'}}
+    />
+
     {/* FLV — peças com tema (alfa / claro / escuro por --props) */}
     {PECAS.map((p) => (
       <Composition<any, {tema: Tema}>

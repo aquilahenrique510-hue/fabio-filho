@@ -153,7 +153,7 @@ export const Clarea: React.FC<{tema: Tema}> = ({tema}) => {
 //   lâmpada e bomba com seta para baixo ...... 01:13,300 ("luz e no") / 01:13,720 ("combustível")
 // Sem número: o plano não diz quanto baixa (pág. 30: "menos imposto [...]").
 // ─────────────────────────────────────────────────────────────────────────────
-export const MENOS_IMPOSTO = {inicio: 72.02, fim: 74.6};
+export const MENOS_IMPOSTO = {inicio: 72.7, fim: 74.3}; // V2: logo depois das barras (FLV-D sai em 72,8); a bet entra em 74,2
 
 export const MenosImposto: React.FC<{tema: Tema}> = ({tema}) => {
 	const frame = useCurrentFrame();

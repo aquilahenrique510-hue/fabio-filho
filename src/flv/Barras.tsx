@@ -9,6 +9,7 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {COR, EXPO_OUT, f, limita, type Tema} from '../shared/design';
 import {Cena, Odometro, sobe, sombra, tinta, tintaMeta} from './comum';
+import {Sons} from './som';
 
 export const IMPOSTO = {inicio: 67.08, fim: 72.8};
 
@@ -20,9 +21,17 @@ const ALTURA_100 = 1800; // px que 100% ocuparia (30% → 540 px)
 export const Barras: React.FC<{tema: Tema}> = ({tema}) => {
 	const frame = useCurrentFrame();
 	const cor = tinta(tema);
-	const eT = sobe(frame, 0, f(0.55));
+	// o título espera o card 4/9 sair do centro (~68,0)
+	const eT = sobe(frame, f(1.0), f(0.55));
 	return (
 		<Cena tema={tema}>
+			<Sons
+				cues={[
+					{t: 0, som: 'whoosh_rapido', vol: 0.7},
+					{t: T_BRASIL, som: 'whoosh_02', vol: 0.75, dura: 1.0},
+					{t: T_OCDE, som: 'whoosh_02', vol: 0.75, dura: 1.0},
+				]}
+			/>
 			<div
 				style={{
 					position: 'absolute',

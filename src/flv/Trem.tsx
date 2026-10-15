@@ -11,6 +11,7 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {COR, EXPO_OUT, INOUT, f, limita, type Tema} from '../shared/design';
 import {Cena, Odometro, sobe, sombra, tinta, tintaMeta} from './comum';
+import {Sons} from './som';
 
 export const TREM = {inicio: 106.88, fim: 111.48};
 
@@ -62,6 +63,14 @@ export const Trem: React.FC<{tema: Tema}> = ({tema}) => {
 
 	return (
 		<Cena tema={tema}>
+			<Sons
+				cues={[
+					{t: 0.1, som: 'woosh_longo', vol: 0.7, dura: 2.5},
+					...chegada.map((c, i) => ({t: 0.1 + (2.5 * c) / TOTAL_PX, som: (i % 2 ? 'pop_2' : 'pop_1') as 'pop_1' | 'pop_2', vol: 0.5})),
+					{t: T_SETE, som: 'chain', vol: 0.75},
+					{t: T_KM, som: 'chain', vol: 0.75},
+				]}
+			/>
 			<svg width={1080} height={1920} style={{position: 'absolute', inset: 0, overflow: 'visible'}}>
 				{/* trilho: a linha cheia com dormentes */}
 				<path

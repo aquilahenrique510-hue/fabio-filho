@@ -12,6 +12,7 @@ import {AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig} from 'remoti
 import {loadFont} from '@remotion/google-fonts/Archivo';
 import {COR, EXPO_OUT, INOUT, MARGEM, LARGURA, f, placa, limita as trava, type Tema} from '../shared/design';
 import {CAPITULOS, TOTAL} from './config';
+import {Sons} from './som';
 
 const {fontFamily} = loadFont('normal', {weights: ['700', '800'], subsets: ['latin', 'latin-ext']});
 
@@ -65,6 +66,13 @@ export const Capitulo: React.FC<CapituloProps> = ({n, tema}) => {
 
 	return (
 		<AbsoluteFill style={{backgroundColor: fundo ?? 'transparent'}}>
+			<Sons
+				cues={[
+					{t: 0, som: 'whoosh_rapido', vol: 0.75},
+					...cap.nome.map((p, i) => ({t: p.t - cap.inicio, som: (i % 2 ? 'pop_2' : 'pop_1') as 'pop_1' | 'pop_2', vol: 0.55})),
+					{t: vaiCanto / 60, som: 'woosh_rapido', vol: 0.6},
+				]}
+			/>
 			<AbsoluteFill style={{opacity: opSaida, fontFamily}}>
 				<div
 					style={{
