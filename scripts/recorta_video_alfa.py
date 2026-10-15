@@ -41,6 +41,34 @@ for n in nomes:
     cima = ndimage.binary_opening(cima, iterations=4)
     cima = maior(cima | trib)
     corpo = ndimage.binary_fill_holes(cima) & ~(np.arange(H)[:, None] >= topo + 6)
+    # bolsões de fundo FECHADOS (entre braço, corpo e tribuna): o preenchimento de buracos
+    # os engolia. Se o fundo é chapado, o que o modelo marcou como fundo E tem a cor do
+    # fundo sai — a faixa verde fica porque o modelo a marca como corpo.
+    cantos = np.concatenate([rgb[:30, :30].reshape(-1, 3), rgb[:30, -30:].reshape(-1, 3)])
+    if cantos.std(0).max() < 12:
+        perto_fundo = np.abs(rgb - np.median(cantos, 0)).sum(2) < 60
+        # verde legítimo (faixa, gravata, broche) encosta no AMARELO; bolsão de fundo não.
+        # 1) o fundo "de fora" (ligado à borda do quadro) é separado primeiro, sem
+        #    atravessar a faixa — onde o modelo diz corpo (a >= 0.5) ele não passa;
+        # 2) cada mancha verde que sobra DENTRO do recorte fica só se a maior parte dela
+        #    está colada ao amarelo; o resto é fundo preso entre braço, corpo e tribuna.
+        amarelo = (r > 190) & (g > 140) & (b < 110) & (r - b > 90)
+        perto_am = ndimage.distance_transform_edt(~amarelo) < 34
+        lab, k = ndimage.label(perto_fundo & ~(a >= 0.5))
+        borda_ids = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))
+        de_fora = np.isin(lab, borda_ids[borda_ids > 0])
+        dentro = perto_fundo & ~de_fora
+        lab, k = ndimage.label(dentro)
+        bolsao = np.zeros_like(dentro)
+        if k:
+            idx = np.arange(1, k + 1)
+            tam = ndimage.sum(np.ones(lab.shape), lab, idx)
+            cola = ndimage.sum(perto_am, lab, idx)
+            bolsao = np.isin(lab, idx[(cola / np.maximum(tam, 1)) < 0.5])
+        bolsao |= de_fora
+        bolsao = ndimage.binary_dilation(bolsao, iterations=2) & ndimage.binary_dilation(perto_fundo, iterations=1)
+        corpo &= ~bolsao
+        trib &= ~bolsao
     dur = corpo | trib
     # alfa: duro no miolo, a borda suave vem do modelo em cima e de um desfoque leve
     alfa = np.where(corpo, np.maximum(a, ndimage.binary_erosion(corpo, iterations=2)), 0).astype(np.float32)
@@ -52,7 +80,10 @@ for n in nomes:
     # cor da borda puxada do miolo (sem halo do fundo)
     miolo = alfa > 0.97
     _, (iy, ix) = ndimage.distance_transform_edt(~miolo, return_indices=True)
-    borda = (alfa > 0) & ~miolo
+    # TODO pixel não-sólido (inclusive os 100% transparentes) leva a cor do boneco mais
+    # próximo: nada da cor do fundo fica guardado por baixo do alfa. Se o programa ler o
+    # alfa mal (Premiere com alfa de 8 bits mostrou o verde LISTRADO), não aparece fundo.
+    borda = ~miolo
     rgb = np.where(borda[..., None], rgb[iy, ix], rgb)
     Image.fromarray(np.dstack([rgb, alfa * 255]).astype(np.uint8), 'RGBA').save(f'{dst}/{n}')
 print('ok', len(nomes))
