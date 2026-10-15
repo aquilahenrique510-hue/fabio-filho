@@ -182,6 +182,10 @@ memória vira código.** O script NÃO julga momento nem estética: a revisão m
   (padrão). E pixel transparente NÃO guarda a cor do fundo original: leva a cor do
   objeto mais próximo (`scripts/recorta_video_alfa.py`) — se o alfa for mal lido, não
   aparece nada errado.
+- **QUICKTIME ANIMATION (qtrle) NÃO FICOU TRANSPARENTE NO PREMIERE** (15/10/2026, NK na
+  Bahia 30 fps). Usei qtrle `argb` (profundidade 32, alfa conferido) para encolher arquivo;
+  no Premiere dele parte das peças entrou sem transparência. **Alfa entregue é sempre
+  ProRes 4444 com alfa de 16 bits** — nunca qtrle, nunca `-alpha_bits 8`.
 - **Recorte de vídeo: `binary_fill_holes` engole fundo preso** entre braço, corpo e
   objeto (o verde do chroma ficou dentro da T3). Bolsão com a cor do fundo sai; o verde
   legítimo (faixa) fica porque encosta no amarelo. Regra só para fundo COLORIDO — em
