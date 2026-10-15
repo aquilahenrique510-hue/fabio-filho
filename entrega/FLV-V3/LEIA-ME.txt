@@ -30,8 +30,9 @@ FLV-N-MenosImposto-alpha.mov  ->  01:12,700 (96 quadros, até 01:14,300)
 FLV-T-Tesoura-alpha.mov  ->  00:01,900 (228 quadros, até 00:05,700), NA FAIXA DE CIMA da FLV-A3
   VEM EM 2 PARTES (.part01/.part02, o arquivo passa de 100 MB): dê dois cliques em
   JUNTAR-Tesoura.bat que ele monta o FLV-T-Tesoura-alpha.mov na mesma pasta.
-  Redesenhada em vetor a partir da ARTE QUE VOCÊ MANDOU (tribuna com selo "?",
-  gravata listrada, broche, microfones na frente das mãos, brilho atrás): a tribuna
-  sobe, ele sai de trás dela, a tesoura fecha nos três cortes com brilho:
-  "isso" 02,660 · "aquilo" 03,100 · "outro" 03,640. Respira e pisca uma vez.
+  É A SUA ARTE, animada (não é redesenho): separada em duas camadas, o boneco
+  (recortado do fundo) e a tribuna. A tribuna sobe, ele sai de trás dela com o
+  brilho acendendo; em cada corte ("isso" 02,660 · "aquilo" 03,100 · "outro" 03,640)
+  um tranco no corpo, brilho correndo pelas lâminas e estrela nas pontas. A tesoura
+  é parte do desenho, por isso não abre e fecha. Respira e balança entre os cortes.
   SEM SOM de propósito: a FLV-A3 já toca o obturador nesses mesmos três cortes.
