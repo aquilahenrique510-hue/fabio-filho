@@ -14,7 +14,6 @@ import {Clarea, CLAREA, MenosImposto, MENOS_IMPOSTO, Chamas, CHAMAS} from './flv
 import type {Tema} from './shared/design';
 import {V2, V2_DURACAO} from './flv/V2';
 import {Abertura, ABERTURA} from './flv/ilustra/abertura';
-import {Plano, PLANO} from './flv/ilustra/fecho';
 import {Bet, BET, Consumo, CONSUMO} from './flv/ilustra/cap1a5';
 
 const durDe = (j: {inicio: number; fim: number}) => Math.round(f(j.fim - j.inicio));
@@ -37,8 +36,6 @@ const PECAS: {id: string; c: React.FC<{tema: Tema}>; j: {inicio: number; fim: nu
   {id: 'FLV-A3-Abertura', c: Abertura, j: ABERTURA},
   {id: 'FLV-R-Consumo', c: Consumo, j: CONSUMO},
   {id: 'FLV-Q-Bet', c: Bet, j: BET},
-  // V4 (15/10/2026): depois do cap. 9, antes do lettering de fecho
-  {id: 'FLV-S-Plano', c: Plano, j: PLANO},
   {id: 'FLV-N-MenosImposto', c: MenosImposto, j: MENOS_IMPOSTO},
   {id: 'FLV-O-Chamas', c: Chamas, j: CHAMAS},
 ];

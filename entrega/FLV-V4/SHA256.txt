@@ -1,5 +1,0 @@
-2e63c507bb6f4f33c191e02d86b7ed1a93bf9171e84e5433e3869cb05560a339  FLV-C-SemMedo-alpha.mov
-d7270c1ee46667db2d319a5487f2552a7910295b7981385e0150a5723358b8b2  FLV-G-Casas-alpha.mov
-b31d897b4f97b5630b2c414671f0d83991a3c9ff420ec24a4c7275dd4bccbfbf  FLV-H-Cresce-alpha.mov
-204faadf8064bc62bd0666b07c3c6a90e869bea2ddc53774c041cfabe619c6b8  FLV-J-Ministerios-alpha.mov
-97c9ccb4dc2afd2a6ec27d2a06dee437c9d5d379ae05d229a17d6ec4177b8c4b  FLV-S-Plano-alpha.mov

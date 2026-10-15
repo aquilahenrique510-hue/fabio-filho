@@ -20,8 +20,6 @@ export type ItemNumero = {
 	depois?: string; // "MIL", "MILHÕES", "%"
 	rotulo: string; // literal da fala
 	desenho?: DesenhoNumero; // V2
-	tDesenho?: number; // V4: atraso do desenho em s (padrão 0,1)
-	durDesenho?: number; // V4: duração do gesto do desenho em s (padrão 0,9)
 };
 
 export type NumerosProps = {tema: Tema; itens: ItemNumero[]};
@@ -57,17 +55,14 @@ const Item: React.FC<{tema: Tema; item: ItemNumero; proximo?: number}> = ({tema,
 	const cor = tinta(tema);
 	const eR = sobe(frame, ini + f(0.18), f(0.5));
 	const temSuf = Boolean(item.depois);
-	// gesto longo (durDesenho) corre em ritmo constante — sequência de 10 não pode ser expo
-	const eD = item.durDesenho
-		? limita((frame - ini - f(item.tDesenho ?? 0.1)) / f(item.durDesenho))
-		: sobe(frame, ini + f(item.tDesenho ?? 0.1), f(0.9));
+	const eD = sobe(frame, ini + f(0.1), f(0.9));
 	const Des = item.desenho;
 	const px = item.valor.length + (item.antes?.length ?? 0) > 5 ? PX * 0.82 : PX;
 	return (
 		<>
 		{Des && (
 			<svg width={1080} height={1920} style={{position: 'absolute', inset: 0, opacity: e * (1 - s), overflow: 'visible'}}>
-				<g transform={`translate(540 1560) scale(${(0.9 * ESCALA_ILUSTRA).toFixed(3)})`}>
+				<g transform={`translate(540 1560) scale(${(0.62 * ESCALA_ILUSTRA).toFixed(3)})`}>
 					<Des e={eD} cor={cor} tema={tema} />
 				</g>
 			</svg>
@@ -186,5 +181,5 @@ export const CRESCE = {
 export const MINISTERIOS = {
 	inicio: 132.6,
 	fim: 135.14,
-	itens: [{t: 0, valor: '10', rotulo: 'ministérios a menos, no mínimo', desenho: DesMinisterios, tDesenho: 0.45, durDesenho: 1.9}] as ItemNumero[],
+	itens: [{t: 0, valor: '10', rotulo: 'ministérios a menos, no mínimo', desenho: DesMinisterios}] as ItemNumero[],
 };

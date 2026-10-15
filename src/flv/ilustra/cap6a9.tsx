@@ -373,12 +373,10 @@ export const DesCresce: React.FC<{e: number; cor: string; tema: Tema}> = ({e, co
 export const DesMinisterios: React.FC<{e: number; cor: string; tema: Tema}> = ({e, cor}) => (
 	<g>
 		{Array.from({length: 10}, (_, i) => {
-			// V4: os 10 aparecem juntos (até 25% do gesto) e só então afundam, um por um
-			const aparece = Math.max(0, Math.min(1, e / 0.25));
-			const sai = Math.max(0, Math.min(1, ((e - 0.3) / 0.7) * 10 - i));
+			const sai = Math.max(0, Math.min(1, e * 10 - i));
 			const x = -270 + i * 60;
 			return (
-				<g key={i} transform={`translate(${x} ${sai * 60 + (1 - aparece) * 40})`} opacity={aparece * (1 - sai)}>
+				<g key={i} transform={`translate(${x} ${sai * 60})`} opacity={1 - sai}>
 					<rect x={-22} y={-90} width={44} height={150} fill={cor} opacity={0.85} />
 					<path d="M-28 -90 L0 -110 L28 -90 Z" fill={cor} />
 				</g>
