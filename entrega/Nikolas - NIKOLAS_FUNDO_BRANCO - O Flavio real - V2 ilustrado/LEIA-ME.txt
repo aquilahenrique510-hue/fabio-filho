@@ -1,0 +1,16 @@
+FLV · V2 ILUSTRADA — "O Flávio real" (NIKOLAS_FUNDO_BRANCO_H264_6K_AUDIO_por.srt)
+
+UM VÍDEO SÓ, COM SFX:  FLV-V2-Completo-alpha.mov
+  · 2:28,10 · 8886 quadros · 1080×1920 · 60 fps · ProRes 4444 com alfa · áudio com os SFX
+  · coloca na timeline em 00:00:00:00, por cima do bruto. Tudo já está nos timecodes do SRT.
+
+COMO REMONTAR: dois cliques em JUNTAR.bat → pasta MASTERS. Conferir com SHA256.txt.
+
+O QUE TEM DENTRO (além da V1): ilustração em vetor de cada proposta falada, do cap. 1 ao 9,
+contando a mudança (mulher assustada → aliviada, gráfico vermelho → verde, chamas abafadas…),
+com a página do plano na linha de fonte. Tamanho único das ilustrações (ESCALA_ILUSTRA = 0,8).
+
+SFX: produção própria (pasta SFX - LETTERING), normalizados a −1 dBFS. Whoosh pelo tamanho do
+gesto, carimbo, chain nos hodômetros, pop nos rótulos, whoosh longo nos marca-textos.
+
+LEGENDA: corrigir "Clarear" → "ClarIA" (cue 111, 00:52,72).
