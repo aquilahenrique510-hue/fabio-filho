@@ -74,6 +74,12 @@ conferir o ritmo; NÃO vai na timeline).
 
 ESTA PASTA É A VERSÃO LEVE (30 fps), pedida em 15/10/2026 para baixar rápido.
 - 30 fps (os masters de 60 fps estão no branch claude/nice-sagan-l5a4w3, entrega/BAH-V1).
-- Cada peça no codec com alfa mais leve para ela: QuickTime Animation (qtrle) ou ProRes
-  4444 com alfa de 16 bits. Os dois abrem no Premiere com transparência.
-- Arquivos inteiros, sem partes: não precisa de JUNTAR.bat.
+- TODAS as 20 peças em ProRes 4444 com alfa de 16 bits (atualizado em 15/10/2026).
+  A primeira leva tinha 15 peças em QuickTime Animation (qtrle) e algumas não
+  ficaram transparentes no Premiere. Os arquivos tinham alfa (conferido), mas
+  o Premiere não leu. Agora é tudo no mesmo formato das que funcionaram.
+- A peça B passou de 100 MB e veio em 2 partes: rode JUNTAR-B.bat nesta pasta.
+  As outras 19 vêm inteiras.
+- Se alguma ainda aparecer com fundo preto: clique nela no painel Projeto >
+  botão direito > Modificar > Interpretar gravação > Canal alfa > desmarcar
+  "Ignorar canal alfa".
