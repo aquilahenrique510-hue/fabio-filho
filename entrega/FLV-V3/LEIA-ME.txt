@@ -36,3 +36,12 @@ FLV-T-Tesoura-alpha.mov  ->  00:01,900 (228 quadros, até 00:05,700), NA FAIXA D
   um tranco no corpo, brilho correndo pelas lâminas e estrela nas pontas. A tesoura
   é parte do desenho, por isso não abre e fecha. Respira e balança entre os cortes.
   SEM SOM de propósito: a FLV-A3 já toca o obturador nesses mesmos três cortes.
+
+FLV-T2-Tesoura-video-alpha.mov  ->  O VÍDEO QUE VOCÊ MANDOU, sem fundo (96 quadros, 4 s, 24 fps)
+  Aqui a tesoura ABRE E FECHA de verdade. Fundo removido quadro a quadro: some o preto,
+  os refletores, os fotógrafos e a mão de um deles que encostava no ombro; tribuna
+  recortada pela cor (marrom), bordas recolhidas 1 px com a cor puxada de dentro
+  (sem halo branco). Escalado de 720x1280 para 1080x1920. SEM o áudio do vídeo.
+  Não tem entrada/saída própria: é material — corte e dê o fade no Premiere.
+  Use ESTE no lugar da FLV-T se preferir o movimento real da tesoura.
+  (script: scripts/recorta_video_alfa.py)
