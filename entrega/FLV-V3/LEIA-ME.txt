@@ -28,8 +28,10 @@ FLV-N-MenosImposto-alpha.mov  ->  01:12,700 (96 quadros, até 01:14,300)
   Substitui o FLV-N da V2 nesse trecho.
 
 FLV-T-Tesoura-alpha.mov  ->  00:01,900 (228 quadros, até 00:05,700), NA FAIXA DE CIMA da FLV-A3
-  A referência que você mandou (terno, faixa presidencial, tesoura gigante) reconstruída
-  em ILUSTRAÇÃO, NO CENTRO: uma tribuna sobe e ele sai de trás dela (a tribuna esconde
-  o corte do corpo). Selo "?" na frente da tribuna: é boato, não discurso.
-  A tesoura fecha nos três cortes: "isso" 02,660 · "aquilo" 03,100 · "outro" 03,640.
+  VEM EM 2 PARTES (.part01/.part02, o arquivo passa de 100 MB): dê dois cliques em
+  JUNTAR-Tesoura.bat que ele monta o FLV-T-Tesoura-alpha.mov na mesma pasta.
+  Redesenhada em vetor a partir da ARTE QUE VOCÊ MANDOU (tribuna com selo "?",
+  gravata listrada, broche, microfones na frente das mãos, brilho atrás): a tribuna
+  sobe, ele sai de trás dela, a tesoura fecha nos três cortes com brilho:
+  "isso" 02,660 · "aquilo" 03,100 · "outro" 03,640. Respira e pisca uma vez.
   SEM SOM de propósito: a FLV-A3 já toca o obturador nesses mesmos três cortes.
