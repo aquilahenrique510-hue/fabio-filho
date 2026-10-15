@@ -44,7 +44,7 @@ BAH-M-Tres                   01:18,380   escudo, maleta, livro (segurança, empr
 BAH-N-Campo                  01:22,480   campo de DESPERTADORES em duas camadas; tocam em "acorda cedo"
 BAH-L2-Acredite (lettering)  01:32,300   modelo 3: "Acredite na / BAHIA / acredite no baiano"
 BAH-L3-Aqui (lettering)      01:47,020   modelo 6: "ela está / AQUI / na Bahia"
-BAH-O-Fecho                  01:48,600   despertador tocando + "ACORDA, BAHIA."
+BAH-O-Fecho                  01:48,740   despertador tocando + "ACORDA, BAHIA."
 
 Vãos sem elemento (de propósito): 00:05–00:07 (respiro depois da abertura),
 01:29–01:32 ("é por isso que eu vim aqui") e 01:34–01:47 ("o baiano que decidiu fazer
@@ -63,3 +63,11 @@ Cada peça já tem o SFX (banco da série: whoosh pela duração do gesto, pop n
 chain nos hodômetros). Saída de 21 quadros fechando 4 antes do fim.
 Mapa: svg-maps/brazil, de Victor Cazanave (licença CC BY 4.0) — citar na descrição.
 Legenda: a primeira linha do SRT vem com a marca do TurboScribe — apague na legenda.
+
+DOWNLOAD
+--------
+Cinco peças passam de 100 MB e vieram em partes (.part01, .part02...): B, C, J, L e N.
+Baixe a pasta inteira (ou as partes de cada uma) e dê dois cliques em JUNTAR.bat — ele
+monta os .mov na mesma pasta. SHA256.txt traz o hash de cada .mov montado.
+BAH_previa_montada.mp4 = todas as peças nos timecodes, sobre um fundo neutro (só para
+conferir o ritmo; NÃO vai na timeline).
