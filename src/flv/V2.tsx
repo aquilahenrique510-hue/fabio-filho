@@ -6,6 +6,7 @@ import React from 'react';
 import {AbsoluteFill, Sequence} from 'remotion';
 import {f, type Tema} from '../shared/design';
 import {Abertura, ABERTURA} from './ilustra/abertura';
+import {Plano, PLANO} from './ilustra/fecho';
 import {Simbolos, MARCADORES} from './Simbolos';
 import {DocumentoCapa, Pagina15, Pagina58, K, L, M} from './Documento';
 import {Numeros, SEM_MEDO, CASAS, CRESCE, MINISTERIOS} from './Numeros';
@@ -80,6 +81,8 @@ export const V2: React.FC<{tema: Tema}> = ({tema}) => (
 		<Em j={MINISTERIOS}><Numeros tema={tema} itens={MINISTERIOS.itens} /></Em>
 		<Em j={SUPERSALARIO}><Supersalario tema={tema} /></Em>
 		<Em j={ESTATAL}><Estatal tema={tema} /></Em>
+		{/* V4: depois do cap. 9 */}
+		<Em j={PLANO}><Plano tema={tema} /></Em>
 		{/* fecho */}
 		<Em j={{inicio: 143.58, fim: 148.08}}>
 			<LetteringModelo1 linha1="mas pelo que" linha2="CONSEGUE" linha3="sustentar" duracao={4.5} />

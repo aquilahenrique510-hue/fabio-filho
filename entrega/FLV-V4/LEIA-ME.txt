@@ -1,0 +1,18 @@
+FLV · V4 — REVISÃO GERAL + PEÇA DEPOIS DO CAP. 9 (15/10/2026)
+Alfa (ProRes 4444) com SFX. Coloque por cima, substituindo as mesmas peças da V2:
+
+  00:00:29,900  FLV-C-SemMedo-alpha.mov      desenhos MAIORES (presídio, câmera)
+  00:01:28,000  FLV-G-Casas-alpha.mov        desenho MAIOR (casinhas)
+  00:01:40,300  FLV-H-Cresce-alpha.mov       desenhos MAIORES (estrada/navio/trem, gráfico)
+                → veio em 2 pedaços: dois cliques em JUNTAR.bat
+  00:02:12,600  FLV-J-Ministerios-alpha.mov  REFEITA: os 10 prédios aparecem e afundam um
+                por um, depois que o card 9/9 sai do centro (antes sumiam em 0,3 s)
+  00:02:21,020  FLV-S-Plano-alpha.mov        NOVA, depois do cap. 9: "Um plano de governo não
+                vale pelo que promete" — a capa real do plano; os balões de promessa sobem
+                e vão embora; três colunas sobem e sustentam a capa. Sai em 02:23,580,
+                exatamente quando entra o lettering de fecho (lettering NÃO foi mexido).
+
+Por que os desenhos dos números mudaram: estavam com ~50% do tamanho das outras ilustrações
+(o "cuidado com o tamanho" vale para os dois lados); agora ~72%.
+O que NÃO mudou: os letterings, a V3 (abertura, consumo, bet) e o resto da V2.
+FLV_V4_previa.mp4 = as cinco em sequência, sobre o fundo de exemplo, só para ver.
