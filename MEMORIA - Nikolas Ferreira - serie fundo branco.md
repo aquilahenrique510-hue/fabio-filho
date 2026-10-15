@@ -723,3 +723,13 @@ trocar pela original quando o design.ts da máquina dele vier.
   extrair o zip do GitHub). Pasta de entrega NO REPOSITÓRIO tem nome curto
   (`entrega/FLV-V1`, `entrega/FLV-V2`); o nome longo da série
   (`Nikolas - <SRT> - <tema>`) fica para a pasta final no E: dele.
+
+## 17. V3 do FLV (15/10/2026) — "faz só o que faltou", pasta separada `entrega/FLV-V3`
+- Cliente: no cap. 4 faltou a bet "dinheiro não indo pro Tigrinho, indo pra comida" e "algum
+  outro" → bet refeita (caça-níquel genérico, sem o tigre de marca → moedas desviam para o
+  carrinho de comida) + carrinho do "imposto do consumo" antes das barras.
+- Abertura refeita ilustrada (tesoura nas caixas "?"; garrafa genérica). Escala própria 1,35:
+  a cena pedia mais tamanho que a escala padrão.
+- Falas sem ilustração que FICAM sem: "Um plano de governo não vale pelo que promete"
+  (opinião declarada, §2.5) — o lettering de fecho entra logo depois.
+- Peças de uma entrega pequena (< 95 MB) vão inteiras ao GitHub; só o master grande vai em pedaços.

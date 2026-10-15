@@ -13,6 +13,8 @@ import {DocumentoCapa, Pagina15, Pagina58, K, L, M} from './flv/Documento';
 import {Clarea, CLAREA, MenosImposto, MENOS_IMPOSTO, Chamas, CHAMAS} from './flv/Ilustra';
 import type {Tema} from './shared/design';
 import {V2, V2_DURACAO} from './flv/V2';
+import {Abertura, ABERTURA} from './flv/ilustra/abertura';
+import {Bet, BET, Consumo, CONSUMO} from './flv/ilustra/cap1a5';
 
 const durDe = (j: {inicio: number; fim: number}) => Math.round(f(j.fim - j.inicio));
 const NUMEROS = [
@@ -30,6 +32,10 @@ const PECAS: {id: string; c: React.FC<{tema: Tema}>; j: {inicio: number; fim: nu
   {id: 'FLV-L-Pagina15', c: Pagina15, j: L},
   {id: 'FLV-M-Pagina58', c: Pagina58, j: M},
   {id: 'FLV-I-Clarea', c: Clarea, j: CLAREA},
+  // V3 (15/10/2026): abertura ilustrada, carrinho do consumo, bet → comida
+  {id: 'FLV-A3-Abertura', c: Abertura, j: ABERTURA},
+  {id: 'FLV-R-Consumo', c: Consumo, j: CONSUMO},
+  {id: 'FLV-Q-Bet', c: Bet, j: BET},
   {id: 'FLV-N-MenosImposto', c: MenosImposto, j: MENOS_IMPOSTO},
   {id: 'FLV-O-Chamas', c: Chamas, j: CHAMAS},
 ];

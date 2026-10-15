@@ -5,7 +5,7 @@
 import React from 'react';
 import {AbsoluteFill, Sequence} from 'remotion';
 import {f, type Tema} from '../shared/design';
-import {Boatos, BOATOS} from './Boatos';
+import {Abertura, ABERTURA} from './ilustra/abertura';
 import {Simbolos, MARCADORES} from './Simbolos';
 import {DocumentoCapa, Pagina15, Pagina58, K, L, M} from './Documento';
 import {Numeros, SEM_MEDO, CASAS, CRESCE, MINISTERIOS} from './Numeros';
@@ -15,7 +15,7 @@ import {Capitulo} from './Capitulo';
 import {CAPITULOS} from './config';
 import {PalavraPorPalavra, ESSA_NEM_EU, duracaoPalavras} from './PalavraPorPalavra';
 import {Clarea, CLAREA, MenosImposto, MENOS_IMPOSTO, Chamas, CHAMAS} from './Ilustra';
-import {Faccao, FACCAO, Creche, CRECHE, Escritura, ESCRITURA, Servicos, SERVICOS, Saude, SAUDE, Bet, BET, Reforco, REFORCO, Faculdade, FACULDADE, Remedio, REMEDIO} from './ilustra/cap1a5';
+import {Faccao, FACCAO, Creche, CRECHE, Escritura, ESCRITURA, Servicos, SERVICOS, Saude, SAUDE, Bet, BET, Reforco, REFORCO, Faculdade, FACULDADE, Remedio, REMEDIO, Consumo, CONSUMO} from './ilustra/cap1a5';
 import {Fraude, FRAUDE, Emprego, EMPREGO, Reeleicao, REELEICAO, Monocratica, MONOCRATICA, Parente, PARENTE, Supersalario, SUPERSALARIO, Estatal, ESTATAL} from './ilustra/cap6a9';
 import {LetteringModelo2} from '../lettering/Modelo2';
 import {LetteringModelo1} from '../lettering/Modelo1';
@@ -32,7 +32,8 @@ const Em: React.FC<{j: J; children: React.ReactNode}> = ({j, children}) => (
 export const V2: React.FC<{tema: Tema}> = ({tema}) => (
 	<AbsoluteFill>
 		{/* gancho */}
-		<Em j={BOATOS}><Boatos tema={tema} /></Em>
+		{/* V3: a abertura com posts cinza virou ilustração */}
+		<Em j={ABERTURA}><Abertura tema={tema} /></Em>
 		<Em j={{inicio: 8.84, fim: 10.94}}>
 			<LetteringModelo2 pequena="contar o Flávio" destaque="REAL" duracao={2.1} />
 		</Em>
@@ -51,6 +52,7 @@ export const V2: React.FC<{tema: Tema}> = ({tema}) => (
 		<Em j={SERVICOS}><Servicos tema={tema} /></Em>
 		<Em j={SAUDE}><Saude tema={tema} /></Em>
 		{/* cap. 4 */}
+		<Em j={CONSUMO}><Consumo tema={tema} /></Em>
 		<Em j={IMPOSTO}><Barras tema={tema} /></Em>
 		<Em j={MENOS_IMPOSTO}><MenosImposto tema={tema} /></Em>
 		<Em j={BET}><Bet tema={tema} /></Em>

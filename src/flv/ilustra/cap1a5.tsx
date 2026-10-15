@@ -228,44 +228,75 @@ export const Saude: React.FC<P> = ({tema}) => (
 );
 
 // ── CAP. 4 · "Dinheiro de programa social não vai pra bet." 01:14,200 → 01:16,980 · pág. 33
+// V3 (pedido 15/10/2026, áudio): "bota o dinheiro não indo pro Tigrinho, indo pra
+// comida". O plano (pág. 33): "dinheiro destinado a pôr comida na mesa não pode
+// escoar para a casa de apostas". Caça-níquel GENÉRICO (777), sem o tigre do jogo
+// de marca.
+//   moedas saem da carteira rumo ao caça-níquel ... 01:14,200 ("Dinheiro")
+//   o caça-níquel é riscado / barra as moedas ..... 01:15,180 ("social não")
+//   as moedas desviam para o carrinho de comida .... 01:15,500 → 01:16,050 (carrinho enche em 01:16,000)
 export const BET = {inicio: 74.2, fim: 76.98};
+const CacaNiquel: React.FC<{x: number; y: number; cor: string; tema: Tema; gira: number}> = ({x, y, cor, tema, gira}) => (
+	<g transform={`translate(${x} ${y})`}>
+		<rect x={-110} y={-130} width={220} height={260} rx={24} fill={par(ALERTA, tema)} stroke={cor} strokeWidth={4} />
+		<rect x={-84} y={-80} width={168} height={80} rx={10} fill="#FFFFFF" />
+		{[-56, 0, 56].map((xx, i) => (
+			<text key={xx} x={xx} y={-20 + Math.sin(gira * 20 + i) * 6} textAnchor="middle" fontSize={56} fontWeight={800} fill={par(ALERTA, tema)} fontFamily="inherit">7</text>
+		))}
+		<rect x={-60} y={30} width={120} height={20} rx={10} fill="#15171A" />
+		<line x1={110} y1={-60} x2={150} y2={-110} stroke={cor} strokeWidth={10} strokeLinecap="round" />
+		<circle cx={152} cy={-114} r={18} fill={COR.marca} />
+	</g>
+);
+const Carrinho: React.FC<{x: number; y: number; cor: string; tema: Tema; cheio: number}> = ({x, y, cor, tema, cheio}) => (
+	<g transform={`translate(${x} ${y})`}>
+		{/* comida aparecendo dentro: pão, maçã, leite */}
+		<g opacity={cheio} transform={`translate(0 ${(1 - cheio) * 30})`}>
+			<ellipse cx={-50} cy={-30} rx={46} ry={26} fill="#D9A15B" />
+			<circle cx={20} cy={-36} r={30} fill={par(ALERTA, tema)} />
+			<rect x={50} y={-90} width={46} height={80} rx={8} fill="#FFFFFF" />
+			<rect x={50} y={-70} width={46} height={20} fill="#7FB6E8" />
+		</g>
+		<path d="M-130 -10 L120 -10 L95 90 L-105 90 Z" fill="none" stroke={cor} strokeWidth={12} strokeLinejoin="round" />
+		<line x1={-130} y1={-10} x2={-170} y2={-60} stroke={cor} strokeWidth={12} strokeLinecap="round" />
+		<circle cx={-80} cy={125} r={20} fill={cor} />
+		<circle cx={70} cy={125} r={20} fill={cor} />
+	</g>
+);
 export const Bet: React.FC<P> = ({tema}) => (
 	<Peca
 		tema={tema}
 		inicio={BET.inicio}
 		rotulo={<>Dinheiro de programa social <Am>não vai pra bet</Am></>}
-		tRotulo={75.18}
+		tRotulo={74.35}
 		fonte="Plano de governo · pág. 33"
 		cues={[
 			{t: 74.2, som: whooshPara(0.9), vol: 0.75},
-			{t: 75.6, som: 'carimbo', vol: 0.9},
+			{t: 75.18, som: 'carimbo', vol: 0.9},
+			{t: 75.5, som: whooshPara(0.6), vol: 0.75},
+			{t: 76.0, som: 'pop_1', vol: 0.7},
 		]}
 		desenho={({frame, tema: tm, cor}) => {
 			const t = (s: number) => s - BET.inicio;
-			const e = entra(frame, 0, 0.5);
-			const vai = vira(frame, 0.2, 1.2);
-			const tranca = entra(frame, t(75.6), 0.2);
-			const volta = vira(frame, t(75.7), 0.6);
+			const e = entra(frame, 0, 0.45);
+			const vai = vira(frame, 0.1, 0.8); // rumo ao caça-níquel
+			const barra = entra(frame, t(75.18), 0.3); // X no caça-níquel
+			// logo depois de barradas, as moedas desviam para o carrinho (antes da saída da peça)
+			const desvia = vira(frame, t(75.5), 0.55);
+			const cheio = entra(frame, t(76.0), 0.3);
 			return (
 				<g opacity={e}>
-					{/* o celular da aposta: dados na tela */}
-					<g>
-						<Celular x={800} y={1230} s={1.2} cor={cor} tela="#2A2E33" />
-						<rect x={760} y={1150} width={46} height={46} rx={8} fill={par(ALERTA, tm)} />
-						<rect x={812} y={1210} width={46} height={46} rx={8} fill={par(ALERTA, tm)} />
-						<circle cx={783} cy={1173} r={6} fill="#FFFFFF" />
-						<circle cx={835} cy={1233} r={6} fill="#FFFFFF" />
-					</g>
-					{/* as moedas vão e batem na tranca */}
+					<CacaNiquel x={790} y={1120} cor={cor} tema={tm} gira={vai * (1 - barra)} />
+					<Risco x={790} y={1120} r={150} p={barra} cor={par(ALERTA, tm)} />
+					<Carrinho x={330} y={1430} cor={cor} tema={tm} cheio={cheio} />
 					{[0, 1, 2].map((i) => {
-						const p = Math.min(vai, 0.62) - volta * 0.5;
-						return <Moeda key={i} x={240 + p * 520 - i * 50} y={1240 - i * 30} r={34} />;
+						// ida: da carteira (esq. alto) até perto do caça-níquel; volta: curva até o carrinho
+						const xIda = interpolate(vai, [0, 1], [230, 600]) - i * 46;
+						const yIda = 1060 - Math.sin(vai * Math.PI) * 60 + i * 24;
+						const x = interpolate(desvia, [0, 1], [xIda, 330 + (i - 1) * 50]);
+						const y = interpolate(desvia, [0, 1], [yIda, 1390]) - Math.sin(desvia * Math.PI) * 140;
+						return <Moeda key={i} x={x} y={y} r={32} op={1 - cheio * 0.9} />;
 					})}
-					{/* cadeado */}
-					<g transform={`translate(640 1240) scale(${1.4 - 0.4 * tranca})`} opacity={tranca}>
-						<path d="M-40 -20 V-60 A40 40 0 0 1 40 -60 V-20" stroke={cor} strokeWidth={14} fill="none" />
-						<rect x={-62} y={-24} width={124} height={100} rx={16} fill={par(FAVOR, tm)} />
-					</g>
 				</g>
 			);
 		}}
@@ -382,6 +413,58 @@ export const Remedio: React.FC<P> = ({tema}) => (
 						<rect x={-60} y={-46} width={120} height={92} rx={12} fill="#FFFFFF" />
 						<rect x={-12} y={-32} width={24} height={64} fill={par(ALERTA, tm)} />
 						<rect x={-32} y={-12} width={64} height={24} fill={par(ALERTA, tm)} />
+					</g>
+				</g>
+			);
+		}}
+	/>
+);
+
+// ── CAP. 4 · "Baixar o imposto do consumo," 01:07,080 → 01:09,460 · pág. 30
+// V3 (pedido 15/10/2026: no cap. 4 "faltou o negócio da bet e algum outro"): o
+// trecho só tinha as barras. Carrinho de compras com a etiqueta de preço; a faixa
+// vermelha do imposto na etiqueta ENCOLHE em "consumo". Sai antes de as barras
+// (FLV-D) subirem em 01:09,460. Sem rótulo: o título "IMPOSTO DO CONSUMO" das
+// barras já entra em 01:08,080.
+export const CONSUMO = {inicio: 67.08, fim: 69.46};
+export const Consumo: React.FC<P> = ({tema}) => (
+	<Peca
+		tema={tema}
+		inicio={CONSUMO.inicio}
+		cues={[
+			{t: 67.08, som: whooshPara(0.5), vol: 0.75},
+			{t: 67.52, som: 'pop_1', vol: 0.7},
+			{t: 68.0, som: whooshPara(0.7), vol: 0.75},
+		]}
+		desenho={({frame, tema: tm, cor}) => {
+			const t = (s: number) => s - CONSUMO.inicio;
+			const e = entra(frame, 0, 0.5);
+			const tag = entra(frame, t(67.52), 0.35);
+			const baixa = vira(frame, t(68.0), 0.7);
+			const verde = par(FAVOR, tm);
+			const verm = par(ALERTA, tm);
+			return (
+				<g opacity={e} transform={`translate(0 ${(1 - e) * 60})`}>
+					{/* carrinho */}
+					<g transform="translate(470 1300)">
+						<g transform="translate(0 -40)">
+							<ellipse cx={-60} cy={-20} rx={50} ry={28} fill="#D9A15B" />
+							<circle cx={20} cy={-30} r={32} fill={verm} />
+							<rect x={60} y={-90} width={48} height={84} rx={8} fill="#FFFFFF" />
+						</g>
+						<path d="M-150 -40 L140 -40 L110 80 L-120 80 Z" fill="none" stroke={cor} strokeWidth={14} strokeLinejoin="round" />
+						<line x1={-150} y1={-40} x2={-196} y2={-100} stroke={cor} strokeWidth={14} strokeLinecap="round" />
+						<circle cx={-90} cy={120} r={22} fill={cor} />
+						<circle cx={80} cy={120} r={22} fill={cor} />
+					</g>
+					{/* etiqueta de preço: produto (amarelo) + imposto (vermelho, que encolhe) */}
+					<g transform={`translate(770 1180) rotate(${8 - 8 * tag}) scale(${tag})`} opacity={tag}>
+						<line x1={-120} y1={-20} x2={-180} y2={40} stroke={cor} strokeWidth={4} />
+						<path d="M-120 -70 L150 -70 L150 70 L-120 70 L-160 0 Z" fill="#FFFFFF" />
+						<circle cx={-120} cy={0} r={10} fill={cor} />
+						<rect x={-90} y={-40} width={130} height={80} rx={8} fill={COR.marca} />
+						<rect x={44} y={-40} width={90 * (1 - 0.6 * baixa)} height={80} rx={8} fill={baixa > 0.5 ? verde : verm} />
+						<Seta x1={90} y1={-110} x2={90} y2={-40} cor={verde} p={baixa} w={10} />
 					</g>
 				</g>
 			);

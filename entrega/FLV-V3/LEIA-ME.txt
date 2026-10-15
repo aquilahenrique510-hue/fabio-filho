@@ -1,0 +1,21 @@
+FLV · V3 — SÓ O QUE FALTOU (15/10/2026)
+Três peças alfa (ProRes 4444, com SFX), para pôr POR CIMA da V2, nos timecodes abaixo:
+
+  00:00:00,080  FLV-A3-Abertura-alpha.mov   abertura ilustrada (substitui a dos posts cinza)
+                celular + "alguém dizendo" · tesoura cortando "isso, aquilo e aquilo outro"
+                (caixas "?" — o vídeo não afirma o que seria cortado) · boato se espalhando ·
+                garrafa de isotônico genérica (sem marca) que vira duas em "mais"
+  00:01:07,080  FLV-R-Consumo-alpha.mov     NOVA · "Baixar o imposto do consumo": carrinho com a
+                etiqueta de preço; a faixa vermelha do imposto encolhe e fica verde. Sai antes
+                das barras 30 × 19 subirem (01:09,460).
+  00:01:14,200  FLV-Q-Bet-alpha.mov         REFEITA · o dinheiro vai rumo ao caça-níquel, é
+                barrado e desvia para o carrinho de comida (pág. 33 do plano: "dinheiro
+                destinado a pôr comida na mesa não pode escoar para a casa de apostas").
+                Caça-níquel genérico (777), sem o tigre do jogo de marca.
+
+NA TIMELINE: cubra/desligue o mesmo trecho da V2 nesses três pontos (a abertura e a bet da V2
+são as versões antigas). O resto da V2 fica como está.
+
+FLV_V3_previa.mp4 = as três em sequência, sobre o fundo de exemplo, só para ver.
+SFX: produção própria (pasta SFX - LETTERING). Conferido: decode, alfa vazio no 1º e no
+último quadro, conteúdo no meio, pico do som entre -1,9 e -3,5 dB.
