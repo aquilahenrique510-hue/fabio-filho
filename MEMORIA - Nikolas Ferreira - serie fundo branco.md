@@ -740,3 +740,16 @@ números maiores, ministérios refeitos, peça depois do cap. 9) foi revertida e
 `entrega/FLV-V4` saiu. Valendo: V2 completa + V3 (cap. 4: consumo e bet; e a abertura).
 Lição: quando ele pede "só o que faltou", NÃO aproveitar para refazer o que já foi
 entregue — oferecer, não fazer.
+
+## 19. 15/10/2026 — FLV tesoura (T, T2, T3) e NK na Bahia (BAH-V1)
+- FLV-T: ele mandou arte pronta (tribuna "?", tesoura) e pediu "anima essa imagem";
+  redesenho em vetor "não tá fiel à arte" → animar a PRÓPRIA imagem em camadas
+  (rembg no boneco, chave sobre o preto na tribuna). Depois mandou dois vídeos de IA do
+  boneco abrindo a tesoura → T2 (fundo branco/fotógrafos) e T3 (chroma verde) recortados
+  quadro a quadro (`scripts/recorta_video_alfa.py`).
+- "Tá bugando, olha as bordas": alfa de 8 bits listra no Premiere + verde guardado sob o
+  alfa + bolsões de fundo presos. Corrigido nos três (ver CLAUDE.md §3.6).
+- NK na Bahia (srt/NK_na_Bahia.srt): 17 peças BAH-* + 3 letterings (modelos 2, 3, 6) em
+  src/bah/. Decisões dele: "5 das 10" (não seis), só soja e algodão, pobreza = "IBGE 2021"
+  (é extrema pobreza), "+20 mil empresas" sem fonte. Rede bloqueou TSE/IBGE/FBSP — números
+  de imprensa, marcados CONFERIR. Mapa: @svg-maps/brazil (CC BY 4.0) via npm.

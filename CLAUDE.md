@@ -176,6 +176,20 @@ memória vira código.** O script NÃO julga momento nem estética: a revisão m
   arquivo em disco** — inclusive os indexados por variável (o mapa `POP` do
   `base.tsx`), que uma varredura de string literal também perde.
 
+- **ALFA DE 8 BITS LISTRA NO PREMIERE** (15/10/2026, FLV-T/T2/T3). Para encolher arquivo
+  recomprimi com `prores_ks -alpha_bits 8`; no Premiere o fundo transparente apareceu como
+  blocos LISTRADOS da cor de fundo. Recomprimir só com `-qscale:v 8` e alfa de 16 bits
+  (padrão). E pixel transparente NÃO guarda a cor do fundo original: leva a cor do
+  objeto mais próximo (`scripts/recorta_video_alfa.py`) — se o alfa for mal lido, não
+  aparece nada errado.
+- **Recorte de vídeo: `binary_fill_holes` engole fundo preso** entre braço, corpo e
+  objeto (o verde do chroma ficou dentro da T3). Bolsão com a cor do fundo sai; o verde
+  legítimo (faixa) fica porque encosta no amarelo. Regra só para fundo COLORIDO — em
+  fundo branco ela furou camisa e tesoura. Conferir a folha de quadros sobre MAGENTA.
+- **Rede da sessão pode bloquear TSE/IBGE/FBSP/Agência Brasil** (15/10/2026, NK na
+  Bahia). Sem documento aberto, número vai marcado "CONFERIR" no LEIA-ME e no
+  `srt/<vídeo>_APURACAO.md`; avisar e indicar os domínios a liberar no ambiente.
+
 #### 3.6.1 Elemento POR CIMA do rosto e das mãos é o estilo, não defeito
 22/09/2026. Montando o Aquila 18 sobre o bruto, chamei de defeito grave o
 calendário cobrir o rosto e a curva atravessar as mãos, e propus refazer três

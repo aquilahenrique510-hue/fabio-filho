@@ -16,6 +16,7 @@ import {V2, V2_DURACAO} from './flv/V2';
 import {Abertura, ABERTURA} from './flv/ilustra/abertura';
 import {Bet, BET, Consumo, CONSUMO} from './flv/ilustra/cap1a5';
 import {Tesoura, TESOURA} from './flv/ilustra/presidente';
+import {PECAS_BAH} from './bah/pecas';
 
 const durDe = (j: {inicio: number; fim: number}) => Math.round(f(j.fim - j.inicio));
 const NUMEROS = [
@@ -40,6 +41,8 @@ const PECAS: {id: string; c: React.FC<{tema: Tema}>; j: {inicio: number; fim: nu
   {id: 'FLV-N-MenosImposto', c: MenosImposto, j: MENOS_IMPOSTO},
   {id: 'FLV-T-Tesoura', c: Tesoura, j: TESOURA}, // canto, por cima da FLV-A3
   {id: 'FLV-O-Chamas', c: Chamas, j: CHAMAS},
+  // NK na Bahia (srt/NK_na_Bahia.srt)
+  ...PECAS_BAH,
 ];
 
 // ── lettering (kit KIT - LETTERING NIKOLAS, 30/09/2026) ─────────────────────

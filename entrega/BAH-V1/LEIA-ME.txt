@@ -1,0 +1,65 @@
+NIKOLAS · NK na Bahia (SRT: NK_na_Bahia.srt, 01:49) · V1
+=========================================================
+
+ANTES DE TUDO: O QUE A FALA DIZ E A TELA NÃO REPETE
+----------------------------------------------------
+Decidido com você em 15/10/2026:
+1. "Seis das dez cidades mais violentas" -> a tela mostra 5 DAS 10. No Anuário FBSP
+   atual (2026, dados de 2025) são cinco: Eunápolis, Porto Seguro, Simões Filho,
+   Jequié e Juazeiro. "Seis" era o Anuário de 2024 (dados de 2023).
+2. "Soja, milho e algodão" -> a tela mostra só SOJA e ALGODÃO (o milho não está
+   entre as principais exportações agrícolas da Bahia, Agrostat 2024).
+3. "11 em cada 100 abaixo da linha da pobreza" -> a tela diz "abaixo da linha da
+   EXTREMA pobreza · IBGE, Salvador 2021" (os 11,2% são extrema pobreza).
+4. "+20 mil empresas" -> entra SEM linha de fonte, como você pediu (só um agregador
+   achou 20.858; não há fonte oficial conferida).
+Também: "estado com mais mortes violentas" é em NÚMERO ABSOLUTO (em taxa a Bahia é
+2ª, atrás do Amapá) — a tela diz "em números absolutos".
+
+ATENÇÃO: a rede desta sessão bloqueou TSE, IBGE, FBSP e Agência Brasil. Os números
+vêm de várias matérias que concordam entre si, não de documento oficial aberto.
+CONFERIR antes de publicar: votação de LEM (TSE), 5.473 MVI e a lista das 10 (FBSP),
+11,4% (IBGE/SIDRA 4099). Lista completa em srt/NK_na_Bahia_APURACAO.md.
+Também por isso NÃO há foto de jornal: os sites estavam bloqueados para download.
+
+O QUE VAI NA TIMELINE (todas ALFA, faixa acima da gravação, a partir do timecode)
+-------------------------------------------------------------------------------
+peça                         entra em    o que é
+BAH-A-Abertura               00:00,280   mapa do Brasil, a Bahia acende e vira DUAS (Bahia x Bahia)
+BAH-B-LEM-Votos              00:07,440   mapa da Bahia + pino em LEM + barras Flávio 62,03% / Lula 32,51%
+BAH-C-LEM-Numeros            00:19,080   26 anos · +100 mil habitantes · potência do agro
+BAH-D-Agro                   00:26,500   SOJA e ALGODÃO · exportações agrícolas da Bahia
+BAH-E-Empresas               00:30,440   prédios, gráfico 0 -> +20 mil empresas, lojinhas, gente (sem fonte)
+BAH-F-MelhorCidade           00:37,900   troféu 1º · melhor cidade média do Nordeste
+BAH-L1-Trabalho (lettering)  00:41,640   modelo 2: "o segredo é simples, / TRABALHO"
+BAH-G1-Mortes                00:44,220   SEGURANÇA · 5.473 mortes violentas em 2025
+BAH-G2-DezCidades            00:47,440   as 10 cidades, as 5 da Bahia acendem em "estão aqui"
+BAH-G3-Faccoes               00:50,480   17 facções criminosas
+BAH-H-Porta                  00:53,080   SALVADOR · cadeado abre, porta abre ("destrancada")
+BAH-I-Emprego                00:58,700   Salvador 11,4% x Brasil 5,4%
+BAH-J-Renda                  01:02,140   100 bonequinhos, 11 acendem
+BAH-K-Desnutricao            01:06,540   Salvador 4,03% x Belém 2,19%
+BAH-L-Educacao               01:09,600   livro riscado · 1.420.947 baianos · o maior número do Brasil
+BAH-M-Tres                   01:18,380   escudo, maleta, livro (segurança, emprego, educação)
+BAH-N-Campo                  01:22,480   campo de DESPERTADORES em duas camadas; tocam em "acorda cedo"
+BAH-L2-Acredite (lettering)  01:32,300   modelo 3: "Acredite na / BAHIA / acredite no baiano"
+BAH-L3-Aqui (lettering)      01:47,020   modelo 6: "ela está / AQUI / na Bahia"
+BAH-O-Fecho                  01:48,600   despertador tocando + "ACORDA, BAHIA."
+
+Vãos sem elemento (de propósito): 00:05–00:07 (respiro depois da abertura),
+01:29–01:32 ("é por isso que eu vim aqui") e 01:34–01:47 ("o baiano que decidiu fazer
+uma escolha diferente…" + "Se a cidade que menos votou no PT é a que mais cresceu,
+imagina a sua cidade sem o PT") — é opinião, que não ganha grafismo, e "a que mais
+cresceu" não tem fonte conferida. Se quiser algo ali, a alternativa é repetir o pino
+de LEM da BAH-B sem número.
+
+Por que esses letterings: modelos diferentes (2, 3 e 6), espalhados (00:41, 01:32,
+01:47) e nos trechos sem dado. Cada um é um trecho contínuo da fala.
+
+TÉCNICO
+-------
+1080x1920, 60 fps, ProRes 4444 com ALFA DE 16 BITS (o de 8 bits listra no Premiere).
+Cada peça já tem o SFX (banco da série: whoosh pela duração do gesto, pop nos rótulos,
+chain nos hodômetros). Saída de 21 quadros fechando 4 antes do fim.
+Mapa: svg-maps/brazil, de Victor Cazanave (licença CC BY 4.0) — citar na descrição.
+Legenda: a primeira linha do SRT vem com a marca do TurboScribe — apague na legenda.
