@@ -45,3 +45,8 @@ FLV-T2-Tesoura-video-alpha.mov  ->  O VÍDEO QUE VOCÊ MANDOU, sem fundo (96 qua
   Não tem entrada/saída própria: é material — corte e dê o fade no Premiere.
   Use ESTE no lugar da FLV-T se preferir o movimento real da tesoura.
   (script: scripts/recorta_video_alfa.py)
+
+FLV-T3-Tesoura-video-alpha.mov  ->  O SEGUNDO VÍDEO QUE VOCÊ MANDOU (fundo verde), sem fundo
+  96 quadros, 4 s, 24 fps, 1080x1920, sem áudio. Mesmo tratamento da T2 (recorte quadro a
+  quadro, tribuna pela cor sem pegar o verde, borda recolhida sem halo verde).
+  Material: corte e fade no Premiere. T2 e T3 são alternativas entre si — use a que gostar.
