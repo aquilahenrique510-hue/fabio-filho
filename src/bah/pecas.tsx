@@ -614,7 +614,7 @@ export const Campo: React.FC<{tema: Tema}> = ({tema}) => {
 // ─────────────────────────────────────────────────────────────────────────────
 // BAH-O · FECHO — "Acorda, Bahia." (01:48,740) — o despertador toca e o texto entra.
 // ─────────────────────────────────────────────────────────────────────────────
-export const FECHO: Janela = {inicio: 108.6, fim: 111.4};
+export const FECHO: Janela = {inicio: 108.74, fim: 111.5}; // entra em "Acorda": o lettering L3 sai antes
 export const Fecho: React.FC<{tema: Tema}> = ({tema}) => {
 	const frame = useCurrentFrame();
 	const r = (t: number) => t - FECHO.inicio;
@@ -624,7 +624,7 @@ export const Fecho: React.FC<{tema: Tema}> = ({tema}) => {
 	return (
 		<Cena tema={tema}>
 			<Sons cues={cues(FECHO, [
-				{t: 108.6, som: whooshPara(0.5), vol: 0.7},
+				{t: 108.74, som: whooshPara(0.5), vol: 0.7},
 				{t: 108.74, som: 'chain', vol: 0.7},
 			])} />
 			<svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
@@ -660,5 +660,5 @@ export const PECAS_BAH: {id: string; c: React.FC<{tema: Tema}>; j: Janela}[] = [
 export const LETTERINGS_BAH = [
 	{id: 'BAH-L1-Trabalho', modelo: 2, inicio: 41.64, props: {pequena: 'o segredo é simples,', destaque: 'TRABALHO'}},
 	{id: 'BAH-L2-Acredite', modelo: 3, inicio: 92.3, props: {antes: 'Acredite na', destaque: 'BAHIA', depois: 'acredite no baiano'}},
-	{id: 'BAH-L3-Aqui', modelo: 6, inicio: 107.02, props: {cima: 'ela está', destaque: 'AQUI', baixo: 'na Bahia'}},
+	{id: 'BAH-L3-Aqui', modelo: 6, inicio: 107.02, props: {cima: 'ela está', destaque: 'AQUI', baixo: 'na Bahia', duracao: 1.85}},
 ];

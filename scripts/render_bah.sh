@@ -13,7 +13,7 @@ for id in $IDS; do
   case $id in
     BAH-L1-Trabalho) comp=LETTER-Modelo2; props='{"pequena":"o segredo é simples,","destaque":"TRABALHO"}';;
     BAH-L2-Acredite) comp=LETTER-Modelo3; props='{"antes":"Acredite na","destaque":"BAHIA","depois":"acredite no baiano"}';;
-    BAH-L3-Aqui) comp=LETTER-Modelo6; props='{"cima":"ela está","destaque":"AQUI","baixo":"na Bahia"}';;
+    BAH-L3-Aqui) comp=LETTER-Modelo6; props='{"cima":"ela está","destaque":"AQUI","baixo":"na Bahia","duracao":1.85}';;  # fecha antes do "Acorda, Bahia" (108,74)
   esac
   ok=0
   for k in 1 2 3; do
