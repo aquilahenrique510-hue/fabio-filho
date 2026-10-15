@@ -19,3 +19,10 @@ são as versões antigas). O resto da V2 fica como está.
 FLV_V3_previa.mp4 = as três em sequência, sobre o fundo de exemplo, só para ver.
 SFX: produção própria (pasta SFX - LETTERING). Conferido: decode, alfa vazio no 1º e no
 último quadro, conteúdo no meio, pico do som entre -1,9 e -3,5 dB.
+
+FLV-N-MenosImposto-alpha.mov  ->  01:12,700 (96 quadros, até 01:14,300)
+  "Menos imposto na luz e no combustível": a linha vermelha vira e desce verde;
+  em "luz" entra a lâmpada acesa com a etiqueta de imposto encolhendo e ficando verde;
+  em "combustível" entra a bomba com o mostrador descendo. Seta verde para baixo em cada.
+  Sem número (o plano, pág. 30, não diz quanto baixa). SFX: whoosh + dois pops.
+  Substitui o FLV-N da V2 nesse trecho.

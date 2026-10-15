@@ -150,7 +150,8 @@ export const Clarea: React.FC<{tema: Tema}> = ({tema}) => {
 // "...é 19. Menos imposto na luz e no combustível."
 //   linha vermelha subindo já em tela ........ 01:12,020 ("19. Menos")
 //   vira e DESCE, mudando de vermelho p/ verde 01:12,800 ("imposto na")
-//   lâmpada e bomba com seta para baixo ...... 01:13,300 ("luz e no") / 01:13,720 ("combustível")
+//   lâmpada (etiqueta de imposto encolhe) e bomba (mostrador desce),
+//   cada uma com seta verde para baixo ........ 01:13,300 ("luz e no") / 01:13,720 ("combustível")
 // Sem número: o plano não diz quanto baixa (pág. 30: "menos imposto [...]").
 // ─────────────────────────────────────────────────────────────────────────────
 export const MENOS_IMPOSTO = {inicio: 72.7, fim: 74.3}; // V2: logo depois das barras (FLV-D sai em 72,8); a bet entra em 74,2
@@ -203,19 +204,61 @@ export const MenosImposto: React.FC<{tema: Tema}> = ({tema}) => {
 					<path d="M-26 -10 L0 28 L26 -10 Z" fill={verde} />
 				</g>
 				<line x1={140} y1={1460} x2={940} y2={1460} stroke={cor} strokeWidth={4} opacity={0.4 * sobeLinha} />
-				{/* lâmpada */}
-				<g transform={`translate(330 1590) scale(${eL})`} opacity={eL}>
-					<circle cx={0} cy={-20} r={46} fill={COR.marca} />
-					<rect x={-22} y={20} width={44} height={34} rx={6} fill={cor} />
-					<path d="M60 -40 L60 30 M44 14 L60 34 L76 14" stroke={verde} strokeWidth={9} fill="none" strokeLinecap="round" />
-				</g>
-				{/* bomba de combustível */}
-				<g transform={`translate(700 1590) scale(${eC})`} opacity={eC}>
-					<rect x={-42} y={-70} width={84} height={130} rx={10} fill={cor} />
-					<rect x={-28} y={-54} width={56} height={34} rx={4} fill={COR.marca} />
-					<path d="M42 -40 Q80 -40 80 0 L80 40" stroke={cor} strokeWidth={9} fill="none" />
-					<path d="M110 -40 L110 30 M94 14 L110 34 L126 14" stroke={verde} strokeWidth={9} fill="none" strokeLinecap="round" />
-				</g>
+					{/* lâmpada acesa: a etiqueta de imposto encolhe e fica verde ("luz") */}
+					{(() => {
+						const baixa = INOUT(rel(frame, r(73.3) + 0.1, 0.35));
+						const brilho = 0.35 + 0.15 * Math.sin(frame / 4);
+						const seta = (1 - eL) * -30 + Math.sin(frame / 6) * 6;
+						return (
+							<g transform={`translate(290 1620) scale(${1.25 * (0.6 + 0.4 * eL)})`} opacity={eL}>
+								{[0, 1, 2, 3, 4, 5, 6].map((i) => {
+									const a = (-160 + i * 23.3) * (Math.PI / 180);
+									return <line key={i} x1={Math.cos(a) * 92} y1={-50 + Math.sin(a) * 92} x2={Math.cos(a) * (112 + 10 * eL)} y2={-50 + Math.sin(a) * (112 + 10 * eL)}
+										stroke={COR.marca} strokeWidth={10} strokeLinecap="round" opacity={0.5 + brilho} />;
+								})}
+								<circle cx={0} cy={-50} r={78} fill={COR.marca} opacity={brilho * 0.5} />
+								<path d="M-62 -50 A62 62 0 1 1 62 -50 Q62 -10 34 18 L34 40 L-34 40 L-34 18 Q-62 -10 -62 -50 Z" fill={COR.marca} />
+								<path d="M-14 30 L-14 -20 L0 -40 L14 -20 L14 30" stroke="#C99A1E" strokeWidth={5} fill="none" />
+								<rect x={-36} y={44} width={72} height={18} rx={6} fill="#C9CDD2" />
+								<rect x={-32} y={66} width={64} height={18} rx={6} fill="#A9AEB4" />
+								<rect x={-22} y={88} width={44} height={14} rx={6} fill="#7D838A" />
+								{/* etiqueta pendurada: barra de imposto encolhe e esverdeia */}
+								<line x1={34} y1={20} x2={96} y2={56} stroke={cor} strokeWidth={4} />
+								<g transform="translate(96 56) rotate(8)">
+									<rect x={0} y={-8} width={110} height={64} rx={10} fill="#FFFFFF" stroke={cor} strokeWidth={4} />
+									<circle cx={14} cy={24} r={6} fill="#C9CDD2" />
+									<rect x={30} y={10} width={66 * (1 - 0.6 * baixa)} height={28} rx={6} fill={baixa > 0.5 ? verde : vermelho} />
+								</g>
+								<g transform={`translate(-130 ${-30 + seta})`} opacity={baixa}>
+									<path d="M0 -50 L0 30 M-24 8 L0 38 L24 8" stroke={verde} strokeWidth={14} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+								</g>
+							</g>
+						);
+					})()}
+					{/* bomba de combustível: o mostrador de imposto desce ("combustível") */}
+					{(() => {
+						const baixa = INOUT(rel(frame, r(73.72), 0.3));
+						const seta = (1 - eC) * -30 + Math.sin(frame / 6) * 6;
+						const nivel = 5 - Math.round(3 * baixa);
+						return (
+							<g transform={`translate(735 1615) scale(${1.25 * (0.6 + 0.4 * eC)})`} opacity={eC}>
+								<rect x={-70} y={-130} width={140} height={230} rx={16} fill={par(ALERTA, tema)} />
+								<rect x={-80} y={92} width={160} height={22} rx={8} fill={APOIO} />
+								<rect x={-50} y={-110} width={100} height={84} rx={8} fill="#15171A" />
+								{[0, 1, 2, 3, 4].map((i) => (
+									<rect key={i} x={-38 + i * 16} y={-46 - i * 10} width={12} height={10 + i * 10} rx={2}
+										fill={i < nivel ? (baixa > 0.5 ? verde : COR.marca) : '#3A3F45'} />
+								))}
+								<rect x={-40} y={-6} width={80} height={60} rx={8} fill="#FFFFFF" opacity={0.92} />
+								<path d="M-14 14 Q0 -4 14 14 Q14 34 0 38 Q-14 34 -14 14 Z" fill={par(ALERTA, tema)} />
+								<path d="M70 -60 Q120 -60 120 -10 L120 60 Q120 84 100 84" stroke={cor} strokeWidth={12} fill="none" strokeLinecap="round" />
+								<path d="M70 -76 L96 -76 L104 -50 L70 -44 Z" fill={APOIO} />
+								<g transform={`translate(170 ${-30 + seta})`} opacity={baixa}>
+									<path d="M0 -50 L0 30 M-24 8 L0 38 L24 8" stroke={verde} strokeWidth={14} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+								</g>
+							</g>
+						);
+					})()}
 				</Escala>
 			</svg>
 			<Fonte tema={tema} t={0.4} top={1710} texto="Plano de governo · TSE" />
