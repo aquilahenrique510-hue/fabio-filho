@@ -733,3 +733,10 @@ trocar pela original quando o design.ts da máquina dele vier.
 - Falas sem ilustração que FICAM sem: "Um plano de governo não vale pelo que promete"
   (opinião declarada, §2.5) — o lettering de fecho entra logo depois.
 - Peças de uma entrega pequena (< 95 MB) vão inteiras ao GitHub; só o master grande vai em pedaços.
+
+## 18. V4 DESFEITA (15/10/2026)
+Ele: "deixa o que já foi feito, deixa só o do quatro" / "esquece refazer". A V4 (desenhos dos
+números maiores, ministérios refeitos, peça depois do cap. 9) foi revertida e a pasta
+`entrega/FLV-V4` saiu. Valendo: V2 completa + V3 (cap. 4: consumo e bet; e a abertura).
+Lição: quando ele pede "só o que faltou", NÃO aproveitar para refazer o que já foi
+entregue — oferecer, não fazer.
