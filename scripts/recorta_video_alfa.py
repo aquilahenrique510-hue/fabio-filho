@@ -26,7 +26,7 @@ for n in nomes:
     linhas = marrom.mean(1)
     topo = int(np.argmax(linhas > 0.45)) if (linhas > 0.45).any() else H
     # --- embaixo do tampo: a tribuna pela cor (marrom, selo amarelo, "?" preto lá dentro)
-    trib = (sat > 0.28) & (mx > 50)
+    trib = (sat > 0.28) & (mx > 50) & (r >= g)  # r >= g: não pega fundo verde
     trib[:topo - 2] = False
     trib = ndimage.binary_opening(trib, iterations=3)
     trib = maior(trib)
