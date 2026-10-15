@@ -719,3 +719,7 @@ trocar pela original quando o design.ts da máquina dele vier.
 - SFX: a pasta `SFX - LETTERING` dele foi normalizada a −1 dBFS em `public/sfx/serie/`;
   `src/flv/som.tsx` tem `Sons` + `whooshPara(gesto)` (a escada do §4.1). Pico do master
   entre −1 e −3 dB (conferido pelo `confere_alfa.py`).
+- **Windows: caminho máximo de 260 caracteres** (erro 0x80010135 "Caminho muito longo" ao
+  extrair o zip do GitHub). Pasta de entrega NO REPOSITÓRIO tem nome curto
+  (`entrega/FLV-V1`, `entrega/FLV-V2`); o nome longo da série
+  (`Nikolas - <SRT> - <tema>`) fica para a pasta final no E: dele.
