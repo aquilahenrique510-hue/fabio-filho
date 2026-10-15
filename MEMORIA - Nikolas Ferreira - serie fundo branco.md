@@ -705,3 +705,17 @@ trocar pela original quando o design.ts da máquina dele vier.
 - `scripts/caixas_pdf.py`: caixas da frase pelo `pdftotext -bbox-layout` (sem PyMuPDF
   na nuvem). Falha alto se a frase não está na página (testado: a capa é imagem).
 - Documento tem de LER no celular: close de leitura com escala ~0,8 a 200 dpi.
+
+## 16. V2 ILUSTRADA do FLV (15/10/2026) — pedido do cliente, por áudio do Aquila
+- **Ilustrar as PROPOSTAS, não os títulos:** toda proposta falada que dê para desenhar
+  ganha ilustração animada, **em vetor** (nada de foto real), contando a MUDANÇA:
+  mulher assustada → aliviada; gráfico vermelho descendo → verde; chamas abafadas.
+  O card 1/9 e o trem (número + desenho Salvador→Fortaleza) foram aprovados como estão.
+- **Entrega: UM vídeo só, com SFX, em PASTA SEPARADA** da entrega anterior.
+- **"Cuidado com o tamanho dos elementos"** → escala única `ESCALA_ILUSTRA` (0,8) em
+  `src/flv/Ilustra.tsx`, desenho preso na faixa do peito; nada atravessa título.
+- **Na tela só o que a fala diz** valeu de novo: "MAIS IMPOSTO" antes da virada saiu
+  (a fala só diz "Menos imposto").
+- SFX: a pasta `SFX - LETTERING` dele foi normalizada a −1 dBFS em `public/sfx/serie/`;
+  `src/flv/som.tsx` tem `Sons` + `whooshPara(gesto)` (a escada do §4.1). Pico do master
+  entre −1 e −3 dB (conferido pelo `confere_alfa.py`).

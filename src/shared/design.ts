@@ -76,3 +76,14 @@ export type Tema = 'alfa' | 'claro' | 'escuro';
 /** null = alfa (sem placa) */
 export const placa = (tema: Tema): string | null =>
   tema === 'alfa' ? null : tema === 'escuro' ? COR.escuro : COR.fundo;
+
+/**
+ * CORES DE IDENTIDADE COM O PAR CLARO JUNTO (CLAUDE.md §3.2): no alfa vai o
+ * tom claro (vai sobre o vídeo), no claro vai o escuro. `alerta` é o #A8443C
+ * que a série já usava com quatro nomes; `favor` é o verde #3E7F57 (o
+ * #3F7D58 da saidinha era redigitação dele). O par claro do verde é novo.
+ */
+export const ALERTA = {escuro: '#A8443C', claro: '#E8837A'} as const;
+export const FAVOR = {escuro: '#3E7F57', claro: '#8FD3A6'} as const;
+export const APOIO = '#4A5158';
+export const par = (cor: {escuro: string; claro: string}, tema: Tema) => (tema === 'claro' ? cor.escuro : cor.claro);

@@ -10,6 +10,7 @@ import {Trem, TREM} from './flv/Trem';
 import {Simbolos, MARCADORES} from './flv/Simbolos';
 import {Boatos, BOATOS} from './flv/Boatos';
 import {DocumentoCapa, Pagina15, Pagina58, K, L, M} from './flv/Documento';
+import {Clarea, CLAREA, MenosImposto, MENOS_IMPOSTO, Chamas, CHAMAS} from './flv/Ilustra';
 import type {Tema} from './shared/design';
 
 const durDe = (j: {inicio: number; fim: number}) => Math.round(f(j.fim - j.inicio));
@@ -27,6 +28,9 @@ const PECAS: {id: string; c: React.FC<{tema: Tema}>; j: {inicio: number; fim: nu
   {id: 'FLV-K-Documento', c: DocumentoCapa, j: K},
   {id: 'FLV-L-Pagina15', c: Pagina15, j: L},
   {id: 'FLV-M-Pagina58', c: Pagina58, j: M},
+  {id: 'FLV-I-Clarea', c: Clarea, j: CLAREA},
+  {id: 'FLV-N-MenosImposto', c: MenosImposto, j: MENOS_IMPOSTO},
+  {id: 'FLV-O-Chamas', c: Chamas, j: CHAMAS},
 ];
 
 // ── lettering (kit KIT - LETTERING NIKOLAS, 30/09/2026) ─────────────────────
