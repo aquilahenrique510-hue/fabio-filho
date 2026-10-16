@@ -9,7 +9,8 @@
 // em degrau e assenta inteiro, para dar para ler).
 //
 // O CINEMÁTICO, item por item:
-//  · rótulo entra palavra a palavra saindo do desfoque, com o tracking fechando;
+//  · rótulo DIGITADO letra a letra com cursor (pedido dele), som de tecla;
+//  · fonte Cinzel no rótulo e no ano;
 //  · o ano em perspectiva (rotateX que vai assentando) e dolly lento do bloco
 //    inteiro do primeiro ao último quadro — nada para;
 //  · desfoque de movimento na roda enquanto vira;
@@ -26,6 +27,11 @@ import {Easing, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COR, EXPO_OUT, INOUT, f, limita, type Tema} from '../shared/design';
 import {Cena, sombra, tinta, tintaMeta} from '../flv/comum';
 import {Sons, type Cue} from '../flv/som';
+import {loadFont} from '@remotion/google-fonts/Cinzel';
+
+// fonte de cinema (pedido dele, 16/10): Cinzel, a capitular de trailer.
+// Só nesta peça — fonte de uma peça é identidade dela, não da série.
+const {fontFamily: CINEMA} = loadFont('normal', {weights: ['500', '700', '800'], subsets: ['latin', 'latin-ext']});
 
 export type AnosProps = {tema: Tema; duracao: number; de?: number; ate?: number; segura?: number; rotulo?: string};
 export const ANOS_PADRAO: AnosProps = {
@@ -38,10 +44,12 @@ export const ANOS_PADRAO: AnosProps = {
 };
 
 const VIRA_EM = 0.6; // fração do ano em que a roda começa a virar
-const COMECA = 1.3; // s — rótulo e 2026 entram e respiram antes de rodar
+const DIGITA = 0.2; // s — começa a digitar
+const POR_LETRA = 0.06; // s — 0,06 > 0,101/2: o pop alternado não se empilha
+const COMECA = 2.4; // s — rótulo digitado e 2026 respiram antes de rodar
 const PX = 300;
 const H = PX;
-const L = PX * 0.6; // §3.3: cada casa mede px × 0,6
+const L = PX * 0.7; // casa mais larga que o §3.3 (0,6): os dígitos da Cinzel são largos
 // lento e quase constante; só amacia na saída do 2026 e na chegada do 2002
 const CORRE = Easing.bezier(0.3, 0, 0.6, 1);
 
@@ -106,9 +114,15 @@ export const Anos: React.FC<AnosProps> = (props) => {
 	const sai = limita((frame - (dur - f(0.75))) / f(0.6));
 	const desfoqueSaida = 10 * INOUT(sai);
 
-	// rótulo palavra a palavra
-	const palavras = rotulo!.split(' ');
-	const tracking = 0.34 - 0.26 * EXPO_OUT(limita(frame / f(1.8)));
+	// rótulo digitado
+	const letras = Array.from(rotulo!);
+	const tLetra = (k: number) => f(DIGITA + POR_LETRA * k);
+	const digitadas = letras.filter((_, k) => frame >= tLetra(k)).length;
+	const acabouDigitar = tLetra(letras.length);
+	// cursor: pisca enquanto espera, fica aceso digitando, some depois do 2026 rodar
+	const piscando = Math.floor(frame / f(0.5)) % 2 === 0;
+	const cursorOp = (frame < acabouDigitar ? 1 : piscando ? 1 : 0) * (1 - limita((frame - f(COMECA + 0.6)) / f(0.3)));
+	const tracking = 0.16 - 0.06 * EXPO_OUT(limita(frame / f(3)));
 
 	// entrada do ano
 	const eAno = EXPO_OUT(limita((frame - f(0.35)) / f(0.9)));
@@ -120,7 +134,10 @@ export const Anos: React.FC<AnosProps> = (props) => {
 	const eRegua = EXPO_OUT(limita((frame - f(0.7)) / f(0.9)));
 
 	const cues: Cue[] = [
-		{t: 0, som: 'whoosh_02', vol: 0.55},
+		...letras
+			.map((c, k) => ({c, k}))
+			.filter(({c}) => c !== ' ')
+			.map(({k}, j): Cue => ({t: tLetra(k) / 60, som: j % 2 ? 'pop_2' : 'pop_1', vol: 0.3})),
 		...viradas(dur, ini, fim, n).map((q, k, arr): Cue => ({
 			t: q / 60,
 			som: k % 2 ? 'pop_2' : 'pop_1',
@@ -155,14 +172,22 @@ export const Anos: React.FC<AnosProps> = (props) => {
 						transform: `translateX(${derivaX.toFixed(2)}px) scale(${dolly.toFixed(4)})`,
 					}}
 				>
-					{/* rótulo */}
-					<div style={{display: 'flex', gap: '0.32em', fontSize: 46, fontWeight: 500, letterSpacing: `${tracking.toFixed(3)}em`, color: tintaMeta(tema), textShadow: sombra(tema), whiteSpace: 'nowrap'}}>
-						{palavras.map((w, k) => {
-							const e = EXPO_OUT(limita((frame - f(0.1 + 0.13 * k)) / f(0.8)));
+					{/* rótulo digitado */}
+					<div style={{display: 'flex', alignItems: 'center', fontFamily: CINEMA, fontSize: 48, fontWeight: 700, letterSpacing: `${tracking.toFixed(3)}em`, color: tintaMeta(tema), textShadow: sombra(tema), whiteSpace: 'pre'}}>
+						{letras.map((c, k) => {
+							const e = limita((frame - tLetra(k)) / 4); // 4 quadros de amaciamento por letra
+							// as letras ainda não digitadas ocupam o lugar (opacidade 0): a linha
+							// nasce já centrada na posição final e não escorrega enquanto digita
 							return (
-								<span key={k} style={{display: 'inline-block', opacity: e, filter: `blur(${(12 * (1 - e)).toFixed(2)}px)`, transform: `translateY(${((1 - e) * 22).toFixed(1)}px)`}}>
-									{w}
-								</span>
+								<React.Fragment key={k}>
+									<span style={{opacity: e, filter: e < 1 ? `blur(${(5 * (1 - e)).toFixed(2)}px)` : undefined}}>{c}</span>
+									{k === Math.max(0, digitadas - 1) && (
+										// cursor colado na última letra digitada, sem largura (não empurra nada)
+										<span style={{position: 'relative', width: 0, height: 50}}>
+											<span style={{position: 'absolute', left: 6, top: 0, width: 4, height: 50, background: COR.marca, opacity: cursorOp}} />
+										</span>
+									)}
+								</React.Fragment>
 							);
 						})}
 					</div>
@@ -188,7 +213,7 @@ export const Anos: React.FC<AnosProps> = (props) => {
 									<div key={k} style={{width: L, height: H, overflow: 'hidden', position: 'relative', maskImage: MASCARA_V, WebkitMaskImage: MASCARA_V}}>
 										<div style={{position: 'absolute', left: 0, top: 0, transform: `translateY(${(-pos * H).toFixed(2)}px)`, filter: borrao > 0.2 ? `blur(${borrao.toFixed(2)}px)` : undefined}}>
 											{Array.from({length: 11}, (_, j) => (
-												<div key={j} style={{height: H, width: L, textAlign: 'center', fontSize: PX, lineHeight: `${H}px`, fontWeight: 800, color: corAno, fontVariantNumeric: 'tabular-nums'}}>
+												<div key={j} style={{height: H, width: L, textAlign: 'center', fontFamily: CINEMA, fontSize: PX, lineHeight: `${H}px`, fontWeight: 700, color: corAno, fontVariantNumeric: 'tabular-nums'}}>
 													{j % 10}
 												</div>
 											))}
@@ -216,7 +241,7 @@ export const Anos: React.FC<AnosProps> = (props) => {
 								<React.Fragment key={a}>
 									<div style={{position: 'absolute', left: x - 1, top: cheio ? 8 : 18, width: 2, height: cheio ? 46 : 26, background: tintaMeta(tema)}} />
 									{cheio && (
-										<div style={{position: 'absolute', left: x - 60, width: 120, top: 62, textAlign: 'center', fontSize: 28, fontWeight: 500, letterSpacing: '0.08em', color: tintaMeta(tema), textShadow: sombra(tema)}}>{a}</div>
+										<div style={{position: 'absolute', left: x - 60, width: 120, top: 62, textAlign: 'center', fontFamily: CINEMA, fontSize: 28, fontWeight: 500, letterSpacing: '0.08em', color: tintaMeta(tema), textShadow: sombra(tema)}}>{a}</div>
 									)}
 								</React.Fragment>
 							);
