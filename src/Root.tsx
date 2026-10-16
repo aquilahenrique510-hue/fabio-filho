@@ -17,6 +17,7 @@ import {Abertura, ABERTURA} from './flv/ilustra/abertura';
 import {Bet, BET, Consumo, CONSUMO} from './flv/ilustra/cap1a5';
 import {Tesoura, TESOURA} from './flv/ilustra/presidente';
 import {PECAS_BAH} from './bah/pecas';
+import {Anos, ANOS_PADRAO, type AnosProps} from './insert/Anos';
 
 const durDe = (j: {inicio: number; fim: number}) => Math.round(f(j.fim - j.inicio));
 const NUMEROS = [
@@ -70,6 +71,18 @@ export const Root: React.FC = () => (
       width={LARG}
       height={ALT}
       defaultProps={{tema: 'alfa'}}
+    />
+
+    {/* INSERT 2026 → 2002 — duração por --props (duracao em s) */}
+    <Composition<any, AnosProps>
+      id="INSERT-Anos"
+      component={Anos}
+      durationInFrames={Math.round(f(ANOS_PADRAO.duracao))}
+      calculateMetadata={({props}) => ({durationInFrames: Math.round(f(props.duracao ?? ANOS_PADRAO.duracao))})}
+      fps={FPS}
+      width={LARG}
+      height={ALT}
+      defaultProps={ANOS_PADRAO}
     />
 
     {/* FLV — peças com tema (alfa / claro / escuro por --props) */}
