@@ -1,0 +1,8 @@
+INSERT-Anos-alpha.mov: 2026 descendo até 2002 (trecho do Lula, discurso de presidente em 2026)
+
+- 23,976 fps, 14 s 11 quadros (347 quadros), igual ao clipe.
+- ProRes 4444 com alfa de 16 bits: vai por cima do clipe, transparente.
+- Encaixe: o 1º quadro no momento em que o Lula começa a falar.
+- O ano chega em 2002 por volta de 12,2 s, fica parado e some antes do último quadro.
+- Som: um tique por ano que vira (SFX de produção própria, pasta SFX - LETTERING).
+- Outra duração: me passa o tempo e eu re-renderizo (scripts/render_anos.sh).
