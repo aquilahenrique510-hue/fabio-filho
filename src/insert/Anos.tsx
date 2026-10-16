@@ -10,22 +10,26 @@
 // FICA PRONTO PARA SÓ TROCAR A DURAÇÃO: tudo sai de `duracao` (s).
 //   npx remotion render INSERT-Anos x-alpha.mov --codec=prores --prores-profile=4444 \
 //     --pixel-format=yuva444p10le --props='{"tema":"alfa","duracao":7.4}'
-// `segura` = quanto tempo antes do fim ele já está em 2002 (padrão 1,1 s).
+// `segura` = quanto tempo antes do fim ele já está em 2002 (padrão 1,5 s).
+// O clipe dele é 23,976: `scripts/render_anos.sh <segundos> <saida>` renderiza
+// a 60 e converte para 23,976 com a contagem exata de quadros.
 import React from 'react';
 import {Easing, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COR, EXPO_OUT, f, limita, type Tema} from '../shared/design';
 import {Cena, sombra, tinta, tintaMeta} from '../flv/comum';
-import {Sons, whooshPara} from '../flv/som';
+import {Sons} from '../flv/som';
 
 export type AnosProps = {tema: Tema; duracao: number; de?: number; ate?: number; segura?: number};
-export const ANOS_PADRAO: AnosProps = {tema: 'alfa', duracao: 5, de: 2026, ate: 2002, segura: 1.1};
+export const ANOS_PADRAO: AnosProps = {tema: 'alfa', duracao: 14.473, de: 2026, ate: 2002, segura: 1.5};
 
+const VIRA_EM = 0.6; // fração do ano em que a roda começa a virar
 const COMECA = 0.25; // s — o 2026 aparece parado um instante antes de rodar
 const PX = 250;
 const H = PX; // altura de uma casa
 const L = PX * 0.6; // §3.3: cada casa mede px × 0,6
-// arranca devagar, corre no meio e freia chegando no 2002
-const CORRE = Easing.bezier(0.5, 0, 0.45, 1);
+// LENTO e quase constante (16/10: "é para ser algo bem mais lento"): cada ano
+// fica tempo de ser lido; só amacia na saída do 2026 e na chegada do 2002
+const CORRE = Easing.bezier(0.3, 0, 0.6, 1);
 
 /** posição contínua (0–10) da roda `i` (0 = unidades) para o valor v */
 const roda = (v: number, i: number) => {
@@ -35,6 +39,18 @@ const roda = (v: number, i: number) => {
 	// a roda só vira no último 1 da casa de baixo (9→0), como num contador
 	const vira = i === 0 ? resto : limita(resto - (p - 1));
 	return ((base % 10) + vira + 10) % 10;
+};
+
+/** quadros em que cada ano vira (o tique do som cai neles) */
+const viradas = (dur: number, ini: number, fim: number, de: number, ate: number) => {
+	const out: number[] = [];
+	let antes = -1;
+	for (let q = 0; q < dur; q++) {
+		const k = Math.floor(Math.abs(ate - de) * CORRE(limita((q - ini) / (fim - ini))) - VIRA_EM + 1e-9);
+		if (k > antes) out.push(q);
+		antes = k;
+	}
+	return out;
 };
 
 export const Anos: React.FC<AnosProps> = (props) => {
@@ -49,7 +65,9 @@ export const Anos: React.FC<AnosProps> = (props) => {
 	// para ler — rolagem contínua deixava a casa das unidades sempre pela metade
 	const q = Math.abs(ano - de!);
 	const k = Math.floor(q);
-	const degrau = k + EXPO_OUT(limita((q - k) / 0.55));
+	// a virada ocupa os 40% FINAIS de cada ano: o 2002 assenta exatamente em
+	// `fim` (virando no começo, ele chegava 3,4 s antes e ficava parado)
+	const degrau = k + EXPO_OUT(limita((q - k - VIRA_EM) / (1 - VIRA_EM)));
 	const anoRoda = de! + Math.sign(ate! - de!) * degrau;
 	// velocidade (anos por quadro) → desfoque vertical das rodas que giram
 	const pa = CORRE(limita((frame - 1 - ini) / (fim - ini)));
@@ -67,7 +85,9 @@ export const Anos: React.FC<AnosProps> = (props) => {
 	const e = EXPO_OUT(limita(frame / f(0.5)));
 	return (
 		<Cena tema={tema} derivaPx={-10}>
-			<Sons cues={[{t: COMECA, som: whooshPara((fim - ini) / 60), vol: 0.7, dura: (fim - ini) / 60 + 0.25}]} />
+			{/* um tique por ano que vira — rótulo leva tique (§4.1); nenhum
+			    whoosh cobre um gesto de 12 s, e empilhar seria sujeira */}
+			<Sons cues={viradas(durationInFrames, ini, fim, de!, ate!).map((q, n) => ({t: q / 60, som: n % 2 ? 'pop_2' : 'pop_1', vol: 0.45}))} />
 			<div style={{position: 'absolute', left: 0, right: 0, top: 520, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: e, transform: `translateY(${((1 - e) * 40).toFixed(1)}px) scale(${(0.94 + 0.06 * e + 0.03 * p).toFixed(4)})`}}>
 				{/* o ano */}
 				<div style={{display: 'flex', filter: tema === 'claro' ? 'none' : 'drop-shadow(0 6px 20px rgba(0,0,0,.5))'}}>
