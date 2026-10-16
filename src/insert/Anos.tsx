@@ -46,6 +46,7 @@ const VIRA_EM = 0.6; // fração do ano em que a roda começa a virar
 // SOM (16/10, pedido dele): SÓ a digitação que ele mandou (public/sfx/insert/
 // digitacao.wav, 3 s, normalizada a -0 dBFS), tocando enquanto a frase aparece.
 // Os cliques medidos vão de 0,206 a 2,919 s: as letras se espalham nesse trecho.
+const AUDIO_DURA = 3.018; // s — digitacao.wav
 const DIGITA = 0.206; // s — primeiro clique do áudio
 const POR_LETRA = 0.085; // s — 31 intervalos até ~2,85 s, o último clique
 // o hodômetro entra e sai DEVAGAR (pedido dele): fade de 2,5 s e de 2,2 s
@@ -140,7 +141,11 @@ export const Anos: React.FC<AnosProps> = (props) => {
 
 	return (
 		<Cena tema={tema} derivaPx={-14}>
-			<Audio src={staticFile('sfx/insert/digitacao.wav')} />
+			{/* fade in e fade out no áudio também (pedido dele): entra em 0,5 s e sai nos 0,8 s finais */}
+			<Audio
+				src={staticFile('sfx/insert/digitacao.wav')}
+				volume={(q) => Math.min(limita(q / f(0.5)), limita((f(AUDIO_DURA) - q) / f(0.8)))}
+			/>
 			<div style={{position: 'absolute', inset: 0, filter: desfoqueSaida > 0.05 ? `blur(${desfoqueSaida.toFixed(2)}px)` : undefined}}>
 				<div
 					style={{
