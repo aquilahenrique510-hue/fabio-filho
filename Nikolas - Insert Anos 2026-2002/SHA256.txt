@@ -1,1 +1,4 @@
-97b2e86e717339da53aa94f08c592349ce2a2c2e0278fb583f4c3618233bc989  INSERT-Anos-alpha.mov
+02464d50d144f7eeb9f521f00326fceeb7c7030969466a04db61f8a307a3eeb0  INSERT-Anos-alpha.mov.part01
+4c22b3f5bf4be3db8cf6f0c9d92ae61a848d40cd76224531b1626244bceda1e6  INSERT-Anos-alpha.mov.part02
+1e65752248b903ccdce98f8dac02067532d8736053f1167e7dab1fe106f0b9f5  INSERT-Anos-alpha.mov.part03
+4286132f357086d040f035d81c12fca782da7a8ab2aaf1cb41e88b7c99d43d99  INSERT-Anos-alpha.mov (depois de juntar)
