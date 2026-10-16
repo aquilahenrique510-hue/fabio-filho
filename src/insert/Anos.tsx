@@ -20,10 +20,10 @@
 //
 // FICA PRONTO PARA SÓ TROCAR A DURAÇÃO: tudo sai de `duracao` (s).
 // O clipe dele é 23,976: `scripts/render_anos.sh <segundos> <saida>` renderiza
-// a 60 e converte com a contagem exata de quadros (16 s = 384 q = 16.016 s).
+// a 60 e converte com a contagem exata de quadros (18 s = 432 q = 18.018 s).
 // `segura` = quanto tempo antes do fim ele já está em 2002.
 import React from 'react';
-import {Audio, Easing, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {Audio, Easing, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COR, EXPO_OUT, INOUT, f, limita, type Tema} from '../shared/design';
 import {Cena, sombra, tinta, tintaMeta} from '../flv/comum';
 import {loadFont} from '@remotion/google-fonts/Cinzel';
@@ -35,7 +35,7 @@ const {fontFamily: CINEMA} = loadFont('normal', {weights: ['500', '700', '800'],
 export type AnosProps = {tema: Tema; duracao: number; de?: number; ate?: number; segura?: number; rotulo?: string};
 export const ANOS_PADRAO: AnosProps = {
 	tema: 'alfa',
-	duracao: 16.016,
+	duracao: 18.018,
 	de: 2026,
 	ate: 2002,
 	segura: 3.2,
@@ -73,6 +73,18 @@ const degrauEm = (q: number, ini: number, fim: number, n: number) => {
 	const x = n * CORRE(limita((q - ini) / (fim - ini)));
 	const k = Math.floor(x);
 	return k + EXPO_OUT(limita((x - k - VIRA_EM) / (1 - VIRA_EM)));
+};
+
+/** quadros em que cada ano começa a virar — o clique cai neles */
+const viradas = (dur: number, ini: number, fim: number, n: number) => {
+	const out: number[] = [];
+	let antes = -1;
+	for (let q = 0; q < dur; q++) {
+		const k = Math.floor(n * CORRE(limita((q - ini) / (fim - ini))) - VIRA_EM + 1e-9);
+		if (k > antes && k >= 0) out.push(q);
+		antes = k;
+	}
+	return out;
 };
 
 const MASCARA_V = 'linear-gradient(transparent 0%, #000 16%, #000 84%, transparent 100%)';
@@ -146,6 +158,13 @@ export const Anos: React.FC<AnosProps> = (props) => {
 				src={staticFile('sfx/insert/digitacao.wav')}
 				volume={(q) => Math.min(limita(q / f(0.5)), limita((f(AUDIO_DURA) - q) / f(0.8)))}
 			/>
+			{/* um clique da própria digitação (o de 2,742 s, isolado, sem cauda:
+			    public/sfx/insert/clique.wav, 0,11 s) a cada ano que vira (pedido dele) */}
+			{viradas(dur, ini, fim, n).map((q) => (
+				<Sequence key={q} from={q} durationInFrames={Math.round(f(0.11))} layout="none">
+					<Audio src={staticFile('sfx/insert/clique.wav')} volume={0.7} />
+				</Sequence>
+			))}
 			<div style={{position: 'absolute', inset: 0, filter: desfoqueSaida > 0.05 ? `blur(${desfoqueSaida.toFixed(2)}px)` : undefined}}>
 				<div
 					style={{

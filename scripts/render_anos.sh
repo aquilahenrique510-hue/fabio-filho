@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # INSERT-Anos (2026 → 2002) na duração do clipe dele, em 23,976 e alfa.
 # uso: scripts/render_anos.sh <segundos> <saida-alpha.mov> [segura] [tema]
-#  ex.: 16 s a 23,976 = 384 q = 16.016 s · 14s11q = (14*24+11)/23.976 = 14.473 s
+#  ex.: 18 s a 23,976 = 432 q = 18.018 s · 16 s = 16.016 s · 14s11q = (14*24+11)/23.976 = 14.473 s
 set -eu
 D=$1; OUT=$2; SEG=${3:-3.2}; TEMA=${4:-alfa}
 H=$(ls /opt/pw-browsers/chromium_headless_shell-1194/*/headless_shell 2>/dev/null || echo "")
