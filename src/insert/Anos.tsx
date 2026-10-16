@@ -23,10 +23,9 @@
 // a 60 e converte com a contagem exata de quadros (16 s = 384 q = 16.016 s).
 // `segura` = quanto tempo antes do fim ele já está em 2002.
 import React from 'react';
-import {Easing, useCurrentFrame, useVideoConfig} from 'remotion';
+import {Audio, Easing, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COR, EXPO_OUT, INOUT, f, limita, type Tema} from '../shared/design';
 import {Cena, sombra, tinta, tintaMeta} from '../flv/comum';
-import {Sons, type Cue} from '../flv/som';
 import {loadFont} from '@remotion/google-fonts/Cinzel';
 
 // fonte de cinema (pedido dele, 16/10): Cinzel, a capitular de trailer.
@@ -39,14 +38,20 @@ export const ANOS_PADRAO: AnosProps = {
 	duracao: 16.016,
 	de: 2026,
 	ate: 2002,
-	segura: 2.4,
+	segura: 3.2,
 	rotulo: 'Lula, discurso de presidente em:',
 };
 
 const VIRA_EM = 0.6; // fração do ano em que a roda começa a virar
-const DIGITA = 0.2; // s — começa a digitar
-const POR_LETRA = 0.06; // s — 0,06 > 0,101/2: o pop alternado não se empilha
-const COMECA = 2.4; // s — rótulo digitado e 2026 respiram antes de rodar
+// SOM (16/10, pedido dele): SÓ a digitação que ele mandou (public/sfx/insert/
+// digitacao.wav, 3 s, normalizada a -0 dBFS), tocando enquanto a frase aparece.
+// Os cliques medidos vão de 0,206 a 2,919 s: as letras se espalham nesse trecho.
+const DIGITA = 0.206; // s — primeiro clique do áudio
+const POR_LETRA = 0.085; // s — 31 intervalos até ~2,85 s, o último clique
+// o hodômetro entra e sai DEVAGAR (pedido dele): fade de 2,5 s e de 2,2 s
+const FADE_IN = 2.5;
+const FADE_OUT = 2.2;
+const COMECA = 3.2; // s — 2026 já aceso e a frase digitada antes de rodar
 const PX = 300;
 const H = PX;
 const L = PX * 0.7; // casa mais larga que o §3.3 (0,6): os dígitos da Cinzel são largos
@@ -67,18 +72,6 @@ const degrauEm = (q: number, ini: number, fim: number, n: number) => {
 	const x = n * CORRE(limita((q - ini) / (fim - ini)));
 	const k = Math.floor(x);
 	return k + EXPO_OUT(limita((x - k - VIRA_EM) / (1 - VIRA_EM)));
-};
-
-/** quadros em que cada ano começa a virar (o tique do som cai neles) */
-const viradas = (dur: number, ini: number, fim: number, n: number) => {
-	const out: number[] = [];
-	let antes = -1;
-	for (let q = 0; q < dur; q++) {
-		const k = Math.floor(n * CORRE(limita((q - ini) / (fim - ini))) - VIRA_EM + 1e-9);
-		if (k > antes && k >= 0) out.push(q);
-		antes = k;
-	}
-	return out;
 };
 
 const MASCARA_V = 'linear-gradient(transparent 0%, #000 16%, #000 84%, transparent 100%)';
@@ -125,26 +118,15 @@ export const Anos: React.FC<AnosProps> = (props) => {
 	const tracking = 0.16 - 0.06 * EXPO_OUT(limita(frame / f(3)));
 
 	// entrada do ano
-	const eAno = EXPO_OUT(limita((frame - f(0.35)) / f(0.9)));
+	const eAno = INOUT(limita((frame - f(0.4)) / f(FADE_IN)));
+	const saiAno = 1 - INOUT(limita((frame - (dur - f(FADE_OUT + 0.2))) / f(FADE_OUT)));
 
 	// régua
 	const passo = 40;
 	const deslize = (de! - ano) * passo;
 	const anosRegua = Array.from({length: n + 1}, (_, k) => de! + sinal * k);
-	const eRegua = EXPO_OUT(limita((frame - f(0.7)) / f(0.9)));
+	const eRegua = INOUT(limita((frame - f(0.9)) / f(FADE_IN)));
 
-	const cues: Cue[] = [
-		...letras
-			.map((c, k) => ({c, k}))
-			.filter(({c}) => c !== ' ')
-			.map(({k}, j): Cue => ({t: tLetra(k) / 60, som: j % 2 ? 'pop_2' : 'pop_1', vol: 0.3})),
-		...viradas(dur, ini, fim, n).map((q, k, arr): Cue => ({
-			t: q / 60,
-			som: k % 2 ? 'pop_2' : 'pop_1',
-			vol: k === arr.length - 1 ? 0.75 : 0.4,
-		})),
-		{t: fim / 60, som: 'flash', vol: 0.45},
-	];
 
 	const brilho =
 		tema === 'claro'
@@ -158,7 +140,7 @@ export const Anos: React.FC<AnosProps> = (props) => {
 
 	return (
 		<Cena tema={tema} derivaPx={-14}>
-			<Sons cues={cues} />
+			<Audio src={staticFile('sfx/insert/digitacao.wav')} />
 			<div style={{position: 'absolute', inset: 0, filter: desfoqueSaida > 0.05 ? `blur(${desfoqueSaida.toFixed(2)}px)` : undefined}}>
 				<div
 					style={{
@@ -192,13 +174,14 @@ export const Anos: React.FC<AnosProps> = (props) => {
 						})}
 					</div>
 
+					<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: saiAno}}>
 					{/* o ano, em perspectiva */}
 					<div style={{perspective: 1400, marginTop: 10}}>
 						<div
 							style={{
 								display: 'flex',
 								opacity: eAno,
-								transform: `translateY(${((1 - eAno) * 50).toFixed(1)}px) rotateX(${inclina.toFixed(2)}deg)`,
+								transform: `translateY(${((1 - eAno) * 24).toFixed(1)}px) rotateX(${inclina.toFixed(2)}deg)`,
 								transformOrigin: '50% 60%',
 								filter: brilho,
 							}}
@@ -247,6 +230,7 @@ export const Anos: React.FC<AnosProps> = (props) => {
 							);
 						})}
 						<div style={{position: 'absolute', left: 430 - 3, top: 0, width: 6, height: 58, borderRadius: 3, background: COR.marca, boxShadow: tema === 'claro' ? 'none' : '0 0 14px rgba(255,216,77,.55)'}} />
+					</div>
 					</div>
 				</div>
 			</div>

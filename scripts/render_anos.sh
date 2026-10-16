@@ -3,7 +3,7 @@
 # uso: scripts/render_anos.sh <segundos> <saida-alpha.mov> [segura] [tema]
 #  ex.: 16 s a 23,976 = 384 q = 16.016 s · 14s11q = (14*24+11)/23.976 = 14.473 s
 set -eu
-D=$1; OUT=$2; SEG=${3:-2.4}; TEMA=${4:-alfa}
+D=$1; OUT=$2; SEG=${3:-3.2}; TEMA=${4:-alfa}
 H=$(ls /opt/pw-browsers/chromium_headless_shell-1194/*/headless_shell 2>/dev/null || echo "")
 TMP="${OUT%.mov}_60.mov"
 BR=${H:+--browser-executable=$H}
