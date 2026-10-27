@@ -3,7 +3,7 @@
 // 2002 já tem que tá antes um pouco do final". Vai por cima do trecho do Lula
 // (discurso de presidente em 2026).
 // v2 (16/10): "bem mais lento" → 14s11q. v3 (16/10): "algo mais cinemático,
-// puxa até uns 16 segundos" + o texto "Lula, discurso de presidente em:".
+// puxa até uns 16 segundos" + o texto (19/10: "LULA, DISCURSO PRESIDENCIAL EM:").
 //
 // Ano é tempo correndo, não identificador: rola num hodômetro (cada ano vira
 // em degrau e assenta inteiro, para dar para ler).
@@ -25,7 +25,7 @@
 import React from 'react';
 import {Audio, Easing, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COR, EXPO_OUT, INOUT, f, limita, type Tema} from '../shared/design';
-import {Cena, sombra, tinta, tintaMeta} from '../flv/comum';
+import {Cena, tinta, tintaMeta} from '../flv/comum';
 import {loadFont} from '@remotion/google-fonts/Cinzel';
 
 // fonte de cinema (pedido dele, 16/10): Cinzel, a capitular de trailer.
@@ -39,7 +39,7 @@ export const ANOS_PADRAO: AnosProps = {
 	de: 2026,
 	ate: 2002,
 	segura: 3.2,
-	rotulo: 'Lula, discurso de presidente em:',
+	rotulo: 'LULA, DISCURSO PRESIDENCIAL EM:',
 };
 
 const VIRA_EM = 0.6; // fração do ano em que a roda começa a virar
@@ -128,7 +128,7 @@ export const Anos: React.FC<AnosProps> = (props) => {
 	// cursor: pisca enquanto espera, fica aceso digitando, some depois do 2026 rodar
 	const piscando = Math.floor(frame / f(0.5)) % 2 === 0;
 	const cursorOp = (frame < acabouDigitar ? 1 : piscando ? 1 : 0) * (1 - limita((frame - f(COMECA + 0.6)) / f(0.3)));
-	const tracking = 0.16 - 0.06 * EXPO_OUT(limita(frame / f(3)));
+	const tracking = 0.12 - 0.05 * EXPO_OUT(limita(frame / f(3)));
 
 	// entrada do ano
 	const eAno = INOUT(limita((frame - f(0.4)) / f(FADE_IN)));
@@ -141,10 +141,8 @@ export const Anos: React.FC<AnosProps> = (props) => {
 	const eRegua = INOUT(limita((frame - f(0.9)) / f(FADE_IN)));
 
 
-	const brilho =
-		tema === 'claro'
-			? 'none'
-			: `drop-shadow(0 8px 26px rgba(0,0,0,.55)) drop-shadow(0 0 ${(30 + 30 * chegou).toFixed(0)}px rgba(255,${(255 - 39 * chegou).toFixed(0)},${(255 - 178 * chegou).toFixed(0)},${(0.16 + 0.14 * chegou).toFixed(2)}))`;
+	// SEM AURA (19/10, pedido dele): "não quero essa aura em volta, tem que ser o
+	// texto branco e só" — nenhuma sombra nem brilho no ano, no rótulo ou na régua
 	// a tinta do ano esquenta para o amarelo da série na chegada (no claro, fica)
 	const corAno =
 		tema === 'claro'
@@ -179,7 +177,7 @@ export const Anos: React.FC<AnosProps> = (props) => {
 					}}
 				>
 					{/* rótulo digitado */}
-					<div style={{display: 'flex', alignItems: 'center', fontFamily: CINEMA, fontSize: 48, fontWeight: 700, letterSpacing: `${tracking.toFixed(3)}em`, color: tintaMeta(tema), textShadow: sombra(tema), whiteSpace: 'pre'}}>
+					<div style={{display: 'flex', alignItems: 'center', fontFamily: CINEMA, fontSize: 40, fontWeight: 700, letterSpacing: `${tracking.toFixed(3)}em`, color: cor, whiteSpace: 'pre'}}>
 						{letras.map((c, k) => {
 							const e = limita((frame - tLetra(k)) / 4); // 4 quadros de amaciamento por letra
 							// as letras ainda não digitadas ocupam o lugar (opacidade 0): a linha
@@ -207,7 +205,6 @@ export const Anos: React.FC<AnosProps> = (props) => {
 								opacity: eAno,
 								transform: `translateY(${((1 - eAno) * 24).toFixed(1)}px) rotateX(${inclina.toFixed(2)}deg)`,
 								transformOrigin: '50% 60%',
-								filter: brilho,
 							}}
 						>
 							{Array.from({length: digitos}, (_, k) => {
@@ -233,7 +230,7 @@ export const Anos: React.FC<AnosProps> = (props) => {
 
 					{/* traço da chegada */}
 					<div style={{height: 10, width: 4 * L * 0.92, marginTop: 4, display: 'flex', justifyContent: 'center'}}>
-						<div style={{height: 10, width: `${(traco * 100).toFixed(2)}%`, borderRadius: 5, background: COR.marca, boxShadow: tema === 'claro' ? 'none' : '0 0 18px rgba(255,216,77,.5)'}} />
+						<div style={{height: 10, width: `${(traco * 100).toFixed(2)}%`, borderRadius: 5, background: COR.marca}} />
 					</div>
 
 					{/* régua: ponteiro amarelo fixo, anos passando por baixo */}
@@ -248,12 +245,12 @@ export const Anos: React.FC<AnosProps> = (props) => {
 								<React.Fragment key={a}>
 									<div style={{position: 'absolute', left: x - 1, top: cheio ? 8 : 18, width: 2, height: cheio ? 46 : 26, background: tintaMeta(tema)}} />
 									{cheio && (
-										<div style={{position: 'absolute', left: x - 60, width: 120, top: 62, textAlign: 'center', fontFamily: CINEMA, fontSize: 28, fontWeight: 500, letterSpacing: '0.08em', color: tintaMeta(tema), textShadow: sombra(tema)}}>{a}</div>
+										<div style={{position: 'absolute', left: x - 60, width: 120, top: 62, textAlign: 'center', fontFamily: CINEMA, fontSize: 28, fontWeight: 500, letterSpacing: '0.08em', color: tintaMeta(tema)}}>{a}</div>
 									)}
 								</React.Fragment>
 							);
 						})}
-						<div style={{position: 'absolute', left: 430 - 3, top: 0, width: 6, height: 58, borderRadius: 3, background: COR.marca, boxShadow: tema === 'claro' ? 'none' : '0 0 14px rgba(255,216,77,.55)'}} />
+						<div style={{position: 'absolute', left: 430 - 3, top: 0, width: 6, height: 58, borderRadius: 3, background: COR.marca}} />
 					</div>
 					</div>
 				</div>
